@@ -22,6 +22,7 @@ const Filter = (props) => {
         <FilterTitle>Sorvetes</FilterTitle>
       </FilterByCategory>
 
+
     </div>
   )
 }
