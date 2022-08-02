@@ -9,22 +9,22 @@ import LoginPage from '../pages/LoginPage/LoginPage'
 import ProfilePage from '../pages/ProfilePage/ProfilePage'
 import RestaurantPage from '../pages/RestaurantPage/RestaurantPage'
 import SignupPage from '../pages/SignUpPage/SignUpPage'
-import SplashPage from '../pages/SplashPage/Splash'
+import SplashPage from '../pages/SplashPage/SplashPage'
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<FeedPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="signUp" element={<SignupPage />} />
-        <Route path="adressForm" element={<AdressFormPage />} />
-        <Route path="cart" element={<CartPage />} />
-        <Route path="editAdress" element={<EditAdressPage />} />
-        <Route path="editProfile" element={<EditProfilePage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="restaurant/:id" element={<RestaurantPage />} />
-        <Route path="futureEatsC" element={<SplashPage />} />
+        <Route path="/" element={<FeedPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signUp" element={<SignupPage />} />
+        <Route path="/adressForm" element={<AdressFormPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/editAdress" element={<EditAdressPage />} />
+        <Route path="/editProfile" element={<EditProfilePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/restaurant/:id" element={<RestaurantPage />} />
+        <Route path="/futureEatsC" element={<SplashPage />} />
       </Routes>
     </BrowserRouter>
   )
