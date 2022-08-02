@@ -33,7 +33,7 @@ const FeedPage = () => {
 
     const restaurantsList = restaurants
     .filter((restaurant) => {
-        return (filterCategoryValue === "" ? restaurant : (restaurant.category.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "") === filterCategoryValue) )
+        return (filterCategoryValue === "Todos" ? restaurant : (restaurant.category === filterCategoryValue) )
     })
     .filter((restaurant) => {
         return (restaurant.name.toLowerCase().includes(filterNameValue.toLowerCase()))
@@ -53,7 +53,8 @@ const FeedPage = () => {
             />
         )
     })
-
+    
+    console.log(filterCategoryValue)
     return (
         <div>
             FeedPage
@@ -70,3 +71,8 @@ const FeedPage = () => {
 }
 
 export default FeedPage
+
+// .filter((restaurant) => {
+//     return (filterCategoryValue === "" ? restaurant : (restaurant.category.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "") === filterCategoryValue) )
+// })
+
