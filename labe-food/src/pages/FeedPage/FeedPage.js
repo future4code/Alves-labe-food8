@@ -9,8 +9,9 @@ const FeedPage = () => {
 
     const [restaurants, setRestaurants] = useState([])
     const [filterNameValue, setFilterNameValue] = useState("")
+    const [filterCategoryValue, setFilterCategoryValue] = useState("")
 
-    const handleInputChange = (event) => {
+    const handleFilterName = (event) => {
         setFilterNameValue(event.target.value)
     }
 
@@ -32,6 +33,9 @@ const FeedPage = () => {
 
     const restaurantsList = restaurants
     .filter((restaurant) => {
+        return (filterCategoryValue === "" ? restaurant : (restaurant.category.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "") === filterCategoryValue) )
+    })
+    .filter((restaurant) => {
         return (restaurant.name.toLowerCase().includes(filterNameValue.toLowerCase()))
     })
     .map((restaurant) => {
@@ -45,6 +49,7 @@ const FeedPage = () => {
                 deliveryTime={restaurant.deliveryTime}
                 shipping={restaurant.shipping}
                 logoUrl={restaurant.logoUrl}
+                id={restaurant.id}
             />
         )
     })
@@ -53,8 +58,10 @@ const FeedPage = () => {
         <div>
             FeedPage
             <Filter 
-                changeName={handleInputChange}
+                changeName={handleFilterName}
                 filterName={filterNameValue}
+                changeCategory={setFilterCategoryValue}
+                filterCategory={filterCategoryValue}
             />
             {restaurantsList}
 
