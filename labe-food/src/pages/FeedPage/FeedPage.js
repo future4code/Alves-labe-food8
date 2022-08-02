@@ -45,6 +45,7 @@ const FeedPage = () => {
                 deliveryTime={restaurant.deliveryTime}
                 shipping={restaurant.shipping}
                 logoUrl={restaurant.logoUrl}
+                id={restaurant.id}
             />
         )
     })
