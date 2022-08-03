@@ -1,14 +1,49 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Div1, Div2, Div3, Div4, DivOrderCard } from './Styled'
 import Edit from '../../assets/edit.png'
 import { goToEditAdress, goToEditProfile } from '../../routes/Coordinator'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../../components/Footer/Footer'
+import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
+import axios from 'axios'
 
 
 const ProfilePage = () => {
 
   const navigate = useNavigate()
+
+  const [orderHistory, setOrderHistoy] = useState([])
+
+  useEffect(() => {
+    getOrderHistory()
+  }, [])
+
+  const getOrderHistory = () => {
+    axios.get(`${BASE_URL}/orders/history`, {
+      headers: HEADERS
+    })
+    .then((res) => {
+      if (res.data.orders !== null) {
+        setOrderHistoy(res.data.orders)
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const orderHistoryList = orderHistory.map((order) => {
+    return (
+      <DivOrderCard>
+        {/* FALTA SABER COMO OS OBJETOS VEM PARA DEFINIR AS PROPRIEDADES */}
+        {/* <h4>{order.name}</h4>
+        <p>{order.date}</p>
+        <h3>{order.price}</h3> */}
+      </DivOrderCard>
+    )
+  })
+
+  console.log(orderHistory)
 
   return (
     <Div1>
@@ -29,11 +64,8 @@ const ProfilePage = () => {
       <Div4>
         <p>Histórico de pedidos</p>
         <hr />
-        <DivOrderCard>
-          <h4>Nome de um dos pedidos</h4>
-          <p>Data de um dos pedidos</p>
-          <h3>SUBTOTAL de um dos pedidos</h3>
-        </DivOrderCard>
+        {orderHistory[0] === undefined ? <p>Não há pedidos</p> : orderHistoryList}
+        
       </Div4>
       <Footer/>
     </Div1>
