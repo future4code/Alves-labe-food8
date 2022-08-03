@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Container, Logo, Title, Text } from './Styled'
 import ProductCard from '../../components/ProductCard/ProductCard'
 import GlobalStateContext from '../../global/GlobalStateContext'
+import RestaurantProductCard from '../../components/RestaurantProductCard/RestaurantProductCard'
 
 const RestaurantPage = () => {
   const { setters, states } = useContext(GlobalStateContext)
@@ -20,7 +21,7 @@ const RestaurantPage = () => {
   }
   const products = details.restaurant?.products.map(product => {
     return (
-      <ProductCard
+      <RestaurantProductCard
         key={product.id}
         id={product.id}
         photoUrl={product.photoUrl}
@@ -33,8 +34,20 @@ const RestaurantPage = () => {
   })
 
   return (
-    <div>RestaurantPage</div>
-
+    <Container>
+      <Logo src={details.restaurant?.logoUrl} alt="Logo da empresa" />
+      <Title>{details.restaurant?.name}</Title>
+      <Text>{details.restaurant?.category}</Text>
+      <Text>
+        {details.restaurant?.deliveryTime} min Frete: R$
+        {details.restaurant?.shipping}
+        ,00
+      </Text>
+      <Text>{details.restaurant?.address}</Text>
+      <hr />
+      {products}
+    </Container>
+    //Fica aqui diabo
   )
 }
 
