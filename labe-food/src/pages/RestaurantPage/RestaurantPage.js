@@ -1,11 +1,14 @@
 import React, { useContext } from 'react'
 import useRequestData from '../../Hooks/useRequestData'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Container, Logo, Title, Text } from './Styled'
+import ProductCard from '../../components/ProductCard/ProductCard'
+import GlobalStateContext from '../../global/GlobalStateContext'
 import RestaurantProductCard from '../../components/RestaurantProductCard/RestaurantProductCard'
 
 const RestaurantPage = () => {
+  const { setters, states } = useContext(GlobalStateContext)
   const params = useParams()
   const details = useRequestData(
     [],
@@ -13,6 +16,9 @@ const RestaurantPage = () => {
     HEADERS
   )
 
+  const addProduct = (product) => {
+    setters.setProductsCart([...states.productsCart, product])
+  }
   const products = details.restaurant?.products.map(product => {
     return (
       <RestaurantProductCard
@@ -22,6 +28,7 @@ const RestaurantPage = () => {
         name={product.name}
         description={product.description}
         price={product.price}
+        addProduct={addProduct}
       />
     )
   })
