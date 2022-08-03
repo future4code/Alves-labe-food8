@@ -17,6 +17,7 @@ border-radius: 12px;
 
 
 `
+
 export const Title = Styled.h1`
  width: 328px;
   height: 18px;
