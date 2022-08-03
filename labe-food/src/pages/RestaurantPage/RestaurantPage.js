@@ -7,7 +7,7 @@ import GlobalStateContext from '../../global/GlobalStateContext'
 import RestaurantProductCard from '../../components/RestaurantProductCard/RestaurantProductCard'
 
 const RestaurantPage = () => {
-  const { setters, states } = useContext(GlobalStateContext)
+  const { states, setters } = useContext(GlobalStateContext)
   const params = useParams()
   const details = useRequestData(
     [],
@@ -15,7 +15,7 @@ const RestaurantPage = () => {
     HEADERS
   )
 
-  const addProduct = (product) => {
+  const addProduct = product => {
     setters.setProductsCart([...states.productsCart, product])
   }
   const products = details.restaurant?.products.map(product => {
@@ -46,7 +46,6 @@ const RestaurantPage = () => {
       <hr />
       {products}
     </Container>
-    //Fica aqui diabo
   )
 }
 
