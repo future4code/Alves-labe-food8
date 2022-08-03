@@ -1,10 +1,14 @@
 import React, { useContext, useState } from 'react'
 import useRequestData from '../../Hooks/useRequestData'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Container, Logo, Title, Text } from './Styled'
+import GlobalStateContext from '../../global/GlobalStateContext'
+import { goToCart } from '../../routes/Coordinator'
 
 const RestaurantPage = () => {
+  const navigate=useNavigate()
+  const {setters,states}=useContext(GlobalStateContext)
   const [addButton, setAddButton] = useState(0)
   const params = useParams()
   const details = useRequestData(
@@ -19,10 +23,14 @@ const RestaurantPage = () => {
         <h1>{product.name}</h1>
         <p>{product.description}</p>
         <h1>R${product.price}</h1>
-        <button>Ternário</button>
+        <button onClick={()=>addProduct(product)} >Ternário</button>
       </div>
     )
   })
+  const addProduct=(product)=>{
+    setters.setProductsCart([...states.productsCart,product])
+  }
+  
 
   return (
     <Container>
@@ -37,6 +45,7 @@ const RestaurantPage = () => {
       <Text>{details.restaurant?.address}</Text>
       <hr />
       {products}
+      <button onClick={()=>goToCart(navigate)}>cart</button>
     </Container>
   )
 }

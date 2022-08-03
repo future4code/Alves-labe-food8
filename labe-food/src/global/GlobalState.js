@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import GlobalStateContext from './GlobalStateContext'
 import { useState } from 'react'
 
 const GlobalState = props => {
   const [restaurantDetails, setRestaurantsDetails] = useState([])
-  const states = { restaurantDetails }
-  const setters = { setRestaurantsDetails }
+  const [productsCart, setProductsCart] = useState([])
+  const states = { restaurantDetails, productsCart }
+  const setters = { setRestaurantsDetails, setProductsCart }
+
+
 
   return (
     <GlobalStateContext.Provider value={{ states, setters }}>
