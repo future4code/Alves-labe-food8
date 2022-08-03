@@ -25,9 +25,22 @@ const RestaurantPage = () => {
       />
     )
   })
-  
+
   return (
-    <div>RestaurantPage</div>
+    <Container>
+      <Logo src={details.restaurant?.logoUrl} alt="Logo da empresa" />
+      <Title>{details.restaurant?.name}</Title>
+      <Text>{details.restaurant?.category}</Text>
+      <Text>
+        {details.restaurant?.deliveryTime} min Frete: R$
+        {details.restaurant?.shipping}
+        ,00
+      </Text>
+      <Text>{details.restaurant?.address}</Text>
+      <hr />
+      {products}
+    </Container>
+    //Fica aqui diabo
   )
 }
 
