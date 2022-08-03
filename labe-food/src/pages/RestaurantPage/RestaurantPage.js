@@ -3,7 +3,7 @@ import useRequestData from '../../Hooks/useRequestData'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import { useParams } from 'react-router-dom'
 import { Container, Logo, Title, Text } from './Styled'
-import ProductCard from '../../components/ProductCard/ProductCard'
+import RestaurantProductCard from '../../components/RestaurantProductCard/RestaurantProductCard'
 
 const RestaurantPage = () => {
   const params = useParams()
@@ -15,7 +15,7 @@ const RestaurantPage = () => {
 
   const products = details.restaurant?.products.map(product => {
     return (
-      <ProductCard
+      <RestaurantProductCard
         key={product.id}
         id={product.id}
         photoUrl={product.photoUrl}
