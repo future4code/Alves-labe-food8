@@ -1,11 +1,12 @@
-
 import React, { useState } from 'react'
 import { Logo } from './Styled'
 
 export default function RestaurantProductCard(props) {
+  console.log(props)
   const [addButton, setAddButton] = useState(0)
   const handleQuantity = () => {
     setAddButton(addButton + 1)
+    props.addProduct(props)
   }
   return (
     <div key={props.id}>
@@ -19,4 +20,3 @@ export default function RestaurantProductCard(props) {
     </div>
   )
 }
-
