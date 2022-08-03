@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import { BASE_URL } from "../../constants/BASE_URL"
 import GlobalStateContext from "../../global/GlobalStateContext"
-import {ProductCard} from "../../components/ProductCard/ProductCard" 
+import RestaurantProductCard from "../../components/RestaurantProductCard/RestaurantProductCard" 
 
 const AddressStyled=styled.div`
     background-color: #B8B8B8;
@@ -42,7 +42,7 @@ const CardPage = () => {
     }
 
 const Products = states.productsCart&&states.productsCart.map((item)=>{
-     return <ProductCard key={item.id} product={item}/>
+     return <RestaurantProductCard key={item.id} product={item}/>
     })
 
 

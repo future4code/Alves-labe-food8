@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FilterByCategory, FilterTitle} from './Styled'
 
 const Filter = (props) => {
 
   const categories = ["Todos", "Hamburguer", "Asiática", "Italiana" ,"Árabe", "Mexicana", "Baiana", "Carnes", "Petiscos", "Sorvetes" ]
 
+  const [placeholder, setPlaceholder] = useState("Busca em Todos")
+
+  const onClickCategory = (category) => {
+    props.changeCategory(category)
+    setPlaceholder(`Busca em ${category}`)
+  }
+
   const categoriesMenu = categories.map((category) => {
     return (
-      <FilterTitle onClick={() => props.changeCategory(category)}>{category}</FilterTitle>
+      <FilterTitle key={category} onClick={() => onClickCategory(category)}>{category}</FilterTitle>
     )
   })
   
@@ -16,8 +23,7 @@ const Filter = (props) => {
       <input
         onChange={props.changeName}
         value={props.filterName}
-        // onClick={() => props.changeCategory("Todos")}
-        placeholder='Busca'
+        placeholder={placeholder}
       />
       <FilterByCategory>
         {categoriesMenu}
@@ -26,5 +32,3 @@ const Filter = (props) => {
   )
 }
 export default Filter
-// CATEGORIAS:
-// Árabe, Asiática, Hamburguer, Italiana, Sorvetes, Carnes, Baiana, Petiscos, Mexicana

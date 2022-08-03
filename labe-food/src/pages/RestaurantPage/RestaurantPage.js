@@ -3,7 +3,6 @@ import useRequestData from '../../Hooks/useRequestData'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Container, Logo, Title, Text } from './Styled'
-import ProductCard from '../../components/ProductCard/ProductCard'
 import GlobalStateContext from '../../global/GlobalStateContext'
 import RestaurantProductCard from '../../components/RestaurantProductCard/RestaurantProductCard'
 

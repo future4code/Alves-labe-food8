@@ -7,7 +7,7 @@ import Filter from '../../components/Filter/Filter'
 const FeedPage = () => {
     const [restaurants, setRestaurants] = useState([])
     const [filterNameValue, setFilterNameValue] = useState("")
-    const [filterCategoryValue, setFilterCategoryValue] = useState("")
+    const [filterCategoryValue, setFilterCategoryValue] = useState("Todos")
 
     const handleFilterName = (event) => {
         setFilterNameValue(event.target.value)
@@ -51,12 +51,10 @@ const FeedPage = () => {
             />
         )
     })
-
-    console.log(filterCategoryValue)
     
     return (
         <div>
-            FeedPage
+            FutureEatsC
             <Filter
                 changeName={handleFilterName}
                 filterName={filterNameValue}
