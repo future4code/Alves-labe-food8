@@ -1,30 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {BASE_URL, HEADERS} from '../../constants/BASE_URL'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from '../../Hooks/useForm'
 import {useProtectedPage} from "../../Hooks/useProtectedPage"
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
+import GlobalStateContext from '../../global/GlobalStateContext'
+import { GetProfile } from '../../services/GetUserInfo'
 
 const UpdateProfile = () => {
   const {form, onChange, clearFields} = useForm({name:"", email:"", cpf:""})
+
+  const{states, setters} = useContext(GlobalStateContext)
 
   useProtectedPage()
 
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    axios
-    .get(`${BASE_URL}/profile`, {
-      headers: HEADERS
-    })
-    .then ((response) => {
-      console.log(response)
-    })
-    .catch ((err) => {
-       console.log(err.response)
-    })
-  },[])
+  GetProfile()
+  console.log(states.profile)
 
   
   const updateProfile = (event) => {
@@ -36,7 +30,7 @@ const UpdateProfile = () => {
       headers: HEADERS
     })
     .then ((response) => {
-      localStorage.setItem('token', response.data.token)
+      alert("Perfil atualizado.")
       goToProfile(navigate)
     })
     .catch ((err) => {
