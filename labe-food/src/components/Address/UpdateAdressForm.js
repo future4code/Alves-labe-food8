@@ -1,33 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {BASE_URL, HEADERS} from '../../constants/BASE_URL'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from '../../Hooks/useForm'
 import {useProtectedPage} from "../../Hooks/useProtectedPage"
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
+import { GetAddress } from '../../services/GetUserInfo'
+import GlobalStateContext from '../../global/GlobalStateContext'
 
 const UpdateAddressForm = () => {
   const {form, onChange, clearFields} = useForm({street:"", number:"", neighbourhood:"",  city:"", state:"", complement:"" })
+
+  const{states, setters} = useContext(GlobalStateContext)
 
   useProtectedPage()
 
   const navigate = useNavigate()
 
-
-  useEffect(()=>{
-    axios
-    .get(`${BASE_URL}/profile/address`, {
-      headers: HEADERS
-    })
-    .then ((response) => {
-      console.log(response)
-    })
-    .catch ((err) => {
-       console.log(err.response)
-    })
-  },[])
-
-  
+  GetAddress()
+  console.log(states.address)
+ 
+    
   const updateAdress = (event) => {
     event.preventDefault()
 
@@ -37,7 +30,7 @@ const UpdateAddressForm = () => {
       headers: HEADERS
     })
     .then ((response) => {
-      localStorage.setItem('token', response.data.token)
+      alert("Endereço atualizado")
       goToProfile(navigate)
     })
     .catch ((err) => {
