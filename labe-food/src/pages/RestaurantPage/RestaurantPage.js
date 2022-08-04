@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import useRequestData from '../../Hooks/useRequestData'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -14,9 +14,18 @@ const RestaurantPage = () => {
     `${BASE_URL}/restaurants/${params.id}`,
     HEADERS
   )
+  useEffect(() => {
+    setDetailsToGlobalState()
+  }, [details])
 
+  const setDetailsToGlobalState = () => {
+    setters.setRestaurantsDetails(details?.restaurant)
+  }
   const addProduct = product => {
     setters.setProductsCart([...states.productsCart, product])
+  }
+  const removeProduct = () => {
+    setters.setProductsCart([])
   }
   const products = details.restaurant?.products.map(product => {
     return (
@@ -28,6 +37,7 @@ const RestaurantPage = () => {
         description={product.description}
         price={product.price}
         addProduct={addProduct}
+        removeProduct={removeProduct}
       />
     )
   })

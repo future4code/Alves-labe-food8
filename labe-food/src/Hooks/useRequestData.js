@@ -1,10 +1,8 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
-import GlobalStateContext from '../global/GlobalStateContext'
 
 const useRequestData = (initialData, url, headers) => {
   const [data, setData] = useState(initialData)
-  const { states, setters } = useContext(GlobalStateContext)
 
   useEffect(() => {
     axios
@@ -13,7 +11,6 @@ const useRequestData = (initialData, url, headers) => {
       })
       .then(response => {
         setData(response.data)
-        setters.setRestaurantsDetails(response.data)
       })
       .catch(error => {
         console.log(error)
@@ -22,7 +19,6 @@ const useRequestData = (initialData, url, headers) => {
   }, [url])
 
   return data
-  //Fica aqui diabo
 }
 
 export default useRequestData
