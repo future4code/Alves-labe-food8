@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { BASE_URL } from "../../constants/BASE_URL"
 import GlobalStateContext from "../../global/GlobalStateContext"
 import RestaurantProductCard from "../../components/RestaurantProductCard/RestaurantProductCard" 
+import Footer from "../../components/Footer/Footer"
 
 const AddressStyled=styled.div`
     background-color: #B8B8B8;
@@ -12,10 +13,8 @@ const AddressStyled=styled.div`
     color: #000000 25%;
     }
 `
-const CardPage = () => {
+const CartPage = () => {
   const {states}=useContext(GlobalStateContext)
-  const[arrayvazio,setarrayVazio]=useState(states.productsCart)
-
   console.log(states.productsCart[0])
 
 
@@ -41,8 +40,15 @@ const CardPage = () => {
         }).catch((err)=>{console.log(err)})
     }
 
-const Products = states.productsCart&&states.productsCart.map((item)=>{
-     return <RestaurantProductCard key={item.id} product={item}/>
+const Products = states.productsCart&&states.productsCart.map((product)=>{
+     return <RestaurantProductCard
+     key={product.id}
+     id={product.id}
+     photoUrl={product.photoUrl}
+     name={product.name}
+     description={product.description}
+     price={product.price}
+     />
     })
 
 
@@ -65,9 +71,9 @@ const Products = states.productsCart&&states.productsCart.map((item)=>{
                 <p>forma de pagamento</p>
                 <button> confirmar</button>
             </div>
-
+<Footer/>
 
         </div>
     )
 }
-export default CardPage
+export default CartPage

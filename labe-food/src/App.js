@@ -1,4 +1,4 @@
-import Router from './routes/Router'
+import Router from "./routes/Router"
 import GlobalState from './global/GlobalState'
 import { ChakraProvider } from '@chakra-ui/react'
 
