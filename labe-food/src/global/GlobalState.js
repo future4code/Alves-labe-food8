@@ -1,4 +1,3 @@
-
 import React from 'react'
 import GlobalStateContext from './GlobalStateContext'
 import { useState } from 'react'
@@ -12,12 +11,10 @@ const GlobalState = props => {
   const states = { restaurantDetails, productsCart, profile, address }
   const setters = { setRestaurantsDetails, setProductsCart, setProfile, setAddress }
 
-
   return (
     <GlobalStateContext.Provider value={{ states, setters }}>
       {props.children}
     </GlobalStateContext.Provider>
-    //Fica aqui diabo
   )
 }
 export default GlobalState

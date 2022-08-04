@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react'
 import GlobalStateContext from '../../global/GlobalStateContext'
 import { Logo } from './Styled'
+import Modal from '../Modal/Modal'
 
 export default function RestaurantProductCard(props) {
   const [addButton, setAddButton] = useState(0)
+
   const [quantity, setQuantity] = useState(0)
   const { states, setters } = useContext(GlobalStateContext)
-
+  const handleQuantity2 = quantity => {}
   const handleQuantity = (product) => {
     setAddButton(addButton + 1)
     const productsInCart = states.productsCart && states.productsCart.filter((item) => {
@@ -53,18 +55,31 @@ export default function RestaurantProductCard(props) {
     }
   }
 
+  const eraseProduct = () => {
+    setAddButton(0)
+    props.removeProduct()
+  }
 
-  console.log(states.productsCart)
-  console.log(quantity)
   return (
     <div key={props.id}>
       <Logo src={props.photoUrl} alt="Foto do produto" />
       <h1>{props.name}</h1>
       <p>{props.description}</p>
-      <h1>R${props.price}</h1>
-      <button onClick={() => handleQuantity(props)}>Adicionar</button>
+      <h1>R${props.price}0</h1>
+      <button onClick={() => handleQuantity()}>Adicionar</button>
       {addButton}
-      <button onClick={()=>remove(props)}>Remover</button>
+      <button onClick={() => eraseProduct()}>Remover</button>
+      <Modal
+        handleQuantity={handleQuantity}
+        setAddButton={setAddButton}
+        addButton={addButton}
+      />
+
+      //<h1>R${props.price}</h1>
+      //<button onClick={() => handleQuantity(props)}>Adicionar</button>
+      //{addButton}
+      //<button onClick={()=>remove(props)}>Remover</button>
+
     </div>
   )
 }
