@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Container, Logo, Title, Text } from './Styled'
 import GlobalStateContext from '../../global/GlobalStateContext'
 import RestaurantProductCard from '../../components/RestaurantProductCard/RestaurantProductCard'
+import Footer from '../../components/Footer/Footer'
 
 const RestaurantPage = () => {
   const { states, setters } = useContext(GlobalStateContext)
@@ -15,10 +16,10 @@ const RestaurantPage = () => {
     HEADERS
   )
 
-  const addProduct = product => {
-    setters.setProductsCart([...states.productsCart, product])
-  }
   const products = details.restaurant?.products.map(product => {
+    
+
+
     return (
       <RestaurantProductCard
         key={product.id}
@@ -27,7 +28,6 @@ const RestaurantPage = () => {
         name={product.name}
         description={product.description}
         price={product.price}
-        addProduct={addProduct}
       />
     )
   })
@@ -45,6 +45,7 @@ const RestaurantPage = () => {
       <Text>{details.restaurant?.address}</Text>
       <hr />
       {products}
+      <Footer/>
     </Container>
   )
 }
