@@ -18,7 +18,7 @@ export default function InitialFocus(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
   const finalRef = React.useRef()
-  const [quantityInput, setQuantityInput] = useState(0)
+  const [quantityInput, setQuantityInput] = useState('')
   const { states, setters } = useContext(GlobalStateContext)
 
   const onClickModal = e => {
@@ -61,6 +61,7 @@ export default function InitialFocus(props) {
                   value={quantityInput}
                   onChange={handleInput}
                   placeholder="0"
+                  type="number"
                 />
                 <datalist id="quantity">
                   <option value={1} />
