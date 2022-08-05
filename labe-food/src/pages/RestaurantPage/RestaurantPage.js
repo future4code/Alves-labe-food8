@@ -31,9 +31,6 @@ const RestaurantPage = () => {
   }
 
   const products = details.restaurant?.products.map(product => {
-    
-
-
     return (
       <RestaurantProductCard
         key={product.id}
@@ -42,7 +39,7 @@ const RestaurantPage = () => {
         name={product.name}
         description={product.description}
         price={product.price}
-
+        currentRestaurant={details.restaurant}
       />
     )
   })

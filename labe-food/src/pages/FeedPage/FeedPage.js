@@ -60,7 +60,6 @@ const FeedPage = () => {
       )
     })
 
-    console.log(localStorage.getItem('token'))
     
     return (
         <div>
