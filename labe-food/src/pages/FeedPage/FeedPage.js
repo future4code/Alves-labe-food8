@@ -3,16 +3,15 @@ import axios from 'axios'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard'
 import Filter from '../../components/Filter/Filter'
+import Header from '../../components/Header/Header'
 
 const FeedPage = () => {
-
-    const [restaurants, setRestaurants] = useState([])
-    const [filterNameValue, setFilterNameValue] = useState("")
-    const [filterCategoryValue, setFilterCategoryValue] = useState("Todos")
+  const [restaurants, setRestaurants] = useState([])
+  const [filterNameValue, setFilterNameValue] = useState('')
+  const [filterCategoryValue, setFilterCategoryValue] = useState('Todos')
   const handleFilterName = event => {
     setFilterNameValue(event.target.value)
   }
-
 
   useEffect(() => {
     getRestaurants()
@@ -60,20 +59,18 @@ const FeedPage = () => {
       )
     })
 
-    
-    return (
-        <div>
-            FutureEatsC
-            <Filter
-                changeName={handleFilterName}
-                filterName={filterNameValue}
-                changeCategory={setFilterCategoryValue}
-                filterCategory={filterCategoryValue}
-            />
-            {restaurantsList}
-        </div>
-    )
-
+  return (
+    <div>
+      <Header title={'FutureEats-C'} />
+      <Filter
+        changeName={handleFilterName}
+        filterName={filterNameValue}
+        changeCategory={setFilterCategoryValue}
+        filterCategory={filterCategoryValue}
+      />
+      {restaurantsList}
+    </div>
+  )
 }
 export default FeedPage
 

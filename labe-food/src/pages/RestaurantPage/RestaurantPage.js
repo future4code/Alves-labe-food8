@@ -12,6 +12,7 @@ import {
 import GlobalStateContext from '../../global/GlobalStateContext'
 import RestaurantProductCard from '../../components/RestaurantProductCard/RestaurantProductCard'
 import Footer from '../../components/Footer/Footer'
+import Header from '../../components/Header/Header'
 
 const RestaurantPage = () => {
   const { states, setters } = useContext(GlobalStateContext)
@@ -50,29 +51,32 @@ const RestaurantPage = () => {
   })
 
   return (
-    <Container>
-      <RestaurantImage
-        src={details.restaurant?.logoUrl}
-        alt="Logo da empresa"
-      />
-      <Title>{details.restaurant?.name}</Title>
-      <Text>{details.restaurant?.category}</Text>
-      <TextContainer>
-        <Text>
-          {details.restaurant?.deliveryTime - 10}-
-          {details.restaurant?.deliveryTime} min{' '}
-        </Text>
-        <Text>
-          Frete: R$
-          {details.restaurant?.shipping}
-          ,00
-        </Text>
-      </TextContainer>
-      <Text>{details.restaurant?.address}</Text>
-      <hr />
-      {products}
-      <Footer />
-    </Container>
+    <>
+      <Header title={'Restaurante'} />
+      <Container>
+        <RestaurantImage
+          src={details.restaurant?.logoUrl}
+          alt="Logo da empresa"
+        />
+        <Title>{details.restaurant?.name}</Title>
+        <Text>{details.restaurant?.category}</Text>
+        <TextContainer>
+          <Text>
+            {details.restaurant?.deliveryTime - 10}-
+            {details.restaurant?.deliveryTime} min{' '}
+          </Text>
+          <Text>
+            Frete: R$
+            {details.restaurant?.shipping}
+            ,00
+          </Text>
+        </TextContainer>
+        <Text>{details.restaurant?.address}</Text>
+        <hr />
+        {products}
+        <Footer />
+      </Container>
+    </>
   )
 }
 
