@@ -6,7 +6,7 @@ export const FilterByCategory = styled.div`
     padding: 10px;
 `
 export const FilterTitle = styled.h3`
-    padding-right: 10px;
+    padding: 0 10px;
 
 ` 
 

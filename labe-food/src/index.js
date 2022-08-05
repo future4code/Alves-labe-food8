@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import { createGlobalStyle } from 'styled-components'
+import { ChakraProvider } from '@chakra-ui/react'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -15,8 +16,10 @@ const GlobalStyle = createGlobalStyle`
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
+    <ChakraProvider>
     <GlobalStyle/>
     <App />
+    </ChakraProvider>
   </React.StrictMode>
 )
 

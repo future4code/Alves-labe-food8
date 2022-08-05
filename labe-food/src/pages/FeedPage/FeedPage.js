@@ -3,6 +3,8 @@ import axios from 'axios'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard'
 import Filter from '../../components/Filter/Filter'
+import { Div1 } from './Styled'
+import Footer from '../../components/Footer/Footer'
 
 const FeedPage = () => {
     const [restaurants, setRestaurants] = useState([])
@@ -54,7 +56,7 @@ const FeedPage = () => {
     console.log(localStorage.getItem('token'))
     
     return (
-        <div>
+        <Div1>
             FutureEatsC
             <Filter
                 changeName={handleFilterName}
@@ -63,7 +65,8 @@ const FeedPage = () => {
                 filterCategory={filterCategoryValue}
             />
             {restaurantsList}
-        </div>
+            <Footer/>
+        </Div1>
     )
 }
 export default FeedPage

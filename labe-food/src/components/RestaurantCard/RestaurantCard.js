@@ -1,28 +1,24 @@
 import React from 'react'
-import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
 import { goToRestaurant } from '../../routes/Coordinator'
+import { RestaurantCardStyle } from './Styled'
 
 const RestaurantCard = (props) => {
   const navigate = useNavigate()
 
   return (
     <RestaurantCardStyle onClick={() => goToRestaurant(navigate, props.id)}>
+        <div>
         <img src={props.logoUrl} />
+        </div>
         <h2>{props.name}</h2>
-        <h4>Tempo de entrega: {props.deliveryTime}</h4>
-        <h4>Frete: {props.shipping}</h4>
+        <section>
+        <h4>Entrega: {props.deliveryTime-10} - {props.deliveryTime} min</h4>
+        <h4>Frete R${props.shipping},00</h4>
+        </section>
     </RestaurantCardStyle>
   )
 }
 
 export default RestaurantCard
 
-const RestaurantCardStyle = styled.div`
-  border-style: solid ;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  padding: 10px;
-`
