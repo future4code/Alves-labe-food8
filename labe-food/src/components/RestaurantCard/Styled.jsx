@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const RestaurantCardStyle = styled.div`
- display: flex;
- flex-direction: column;
- width: 340px;
- height: 200px;
- border: 1px solid lightgray;
- border-radius: 8px;
- overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 340px;
+    height: 200px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    overflow: hidden;
  div{
     height: 68%;
     align-items: center;
@@ -25,7 +25,7 @@ h2{
     margin: 3% 4% 1% 4%;
 }
 h4{
-    color: #b8b8b8;
+    color: #777777;
     font-size: 16px;
     font-weight: normal;
 }

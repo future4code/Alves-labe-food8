@@ -11,7 +11,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 const Footer = () => {
     const navigate = useNavigate()
-    const params = useParams()
 
   return (
     <Div1>
