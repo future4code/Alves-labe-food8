@@ -1,18 +1,12 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
-import styled from "styled-components"
 import { BASE_URL } from "../../constants/BASE_URL"
 import GlobalStateContext from "../../global/GlobalStateContext"
 import RestaurantProductCard from "../../components/RestaurantProductCard/RestaurantProductCard"
 import Footer from "../../components/Footer/Footer"
+import Header from "../../components/Header/Header"
+import {AddressStyled, LabelTextStyled,TextStyled, NameRestaurant, Text, CartText, PaymentContainer, Button} from './Styled'
 
-const AddressStyled = styled.div`
-    background-color: #B8B8B8;
-    min-height: 100%;
-    p{
-    color: #000000 25%;
-    }
-`
 const CartPage = () => {
     const { states } = useContext(GlobalStateContext)
 
@@ -57,29 +51,32 @@ console.log(states.currentRestaurant.id)
     })
     console.log(states.address)
     return (
-        <div>
+        <>
+            <Header title={"Meu Carrinho"}/>
             <AddressStyled>
-                <p>Endereço de entrega</p>
-                <p>endereço</p>
+                <LabelTextStyled>Endereço de entrega:</LabelTextStyled>
+                <TextStyled>endereço</TextStyled>
             </AddressStyled>
             <div>
-                <p>nome do restaurante:{states.currentRestaurant.name}</p>
-                <p>endereço do restaurante:{states.currentRestaurant.address}</p>
-                <p>tempo de entrega:{states.currentRestaurant.deliveryTime}</p>
+                
+                <NameRestaurant>nome do restaurante:{states.currentRestaurant.name}</NameRestaurant>
+                <Text>endereço do restaurante:{states.currentRestaurant.address}</Text>
+                <Text>tempo de entrega:{states.currentRestaurant.deliveryTime}</Text>
 
-                {states.productsCart[0] === undefined ? "O carrinho esta vazio" : Products}
+                <CartText>{states.productsCart[0] === undefined ? "O carrinho esta vazio" : Products}</CartText>
             </div>
-            <div>
+             {/* <div>
                 <p>frete :{states.currentRestaurant.shipping?states.currentRestaurant.shipping:0}</p>
                 <p> subtotal : {subTotal}</p>
-            </div>
-            <div>
-                <p>forma de pagamento</p>
-                <button onClick={finalizeOrder}> confirmar</button>
-            </div>
+            </div> */}
+            <PaymentContainer>
+                <p>Forma de pagamento</p>
+                <hr/>
+                <Button onClick={finalizeOrder}> CONFIRMAR</Button>
+            </PaymentContainer> 
             <Footer />
 
-        </div>
+        </>
     )
 }
 export default CartPage

@@ -3,6 +3,19 @@ import axios from 'axios'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard'
 import Filter from '../../components/Filter/Filter'
+import Header from '../../components/Header/Header'
+
+const FeedPage = () => {
+  const [restaurants, setRestaurants] = useState([])
+  const [filterNameValue, setFilterNameValue] = useState('')
+  const [filterCategoryValue, setFilterCategoryValue] = useState('Todos')
+  const handleFilterName = event => {
+    setFilterNameValue(event.target.value)
+  }
+
+  useEffect(() => {
+    getRestaurants()
+  }, [])
 import { Div1 } from './Styled'
 import Footer from '../../components/Footer/Footer'
 
@@ -55,6 +68,19 @@ const FeedPage = () => {
 
    
 
+  return (
+    <div>
+      <Header title={'FutureEats-C'} />
+      <Filter
+        changeName={handleFilterName}
+        filterName={filterNameValue}
+        changeCategory={setFilterCategoryValue}
+        filterCategory={filterCategoryValue}
+      />
+      {restaurantsList}
+    </div>
+  )
+
     return (
         <Div1>
             FutureEatsC
@@ -72,6 +98,4 @@ const FeedPage = () => {
 }
 export default FeedPage
 
-// .filter((restaurant) => {
-//     return (filterCategoryValue === "" ? restaurant : (restaurant.category.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "") === filterCategoryValue) )
-// })
+
