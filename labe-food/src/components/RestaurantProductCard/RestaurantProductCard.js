@@ -91,8 +91,8 @@ export default function RestaurantProductCard(props) {
         <Title>{props.name}</Title>
         <QuantityNumber>{quantity ? quantity : ''}</QuantityNumber>
         <DescriptionText>{props.description}</DescriptionText>
-        <Price>R${props.price}</Price>
-        <button onClick={() => handleQuantityCart(props)}>Adicionar</button>
+        <Price>R${props.price.toFixed(2)}</Price>
+        {/* <button onClick={() => handleQuantityCart(props)}>Adicionar</button> */}
 
         <ContainerButton>
           {quantity ? (
