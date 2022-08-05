@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { FilterByCategory, FilterTitle} from './Styled'
+import { Stack, Text, Box, InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
+import { SearchIcon } from '@chakra-ui/icons'
 
 const Filter = (props) => {
 
-  const categories = ["Todos", "Hamburguer", "Asiática", "Italiana" ,"Árabe", "Mexicana", "Baiana", "Carnes", "Petiscos", "Sorvetes" ]
+  const categories = ["Todos", "Hamburguer", "Asiática", "Italiana", "Árabe", "Mexicana", "Baiana", "Carnes", "Petiscos", "Sorvetes"]
 
   const [placeholder, setPlaceholder] = useState("Busca em Todos")
 
@@ -14,20 +15,35 @@ const Filter = (props) => {
 
   const categoriesMenu = categories.map((category) => {
     return (
-      <FilterTitle key={category} onClick={() => onClickCategory(category)}>{category}</FilterTitle>
+      <Box key={category}>
+        <Text onClick={() => onClickCategory(category)}>{category}</Text>
+      </Box>
     )
   })
-  
+
   return (
     <div>
-      <input
-        onChange={props.changeName}
-        value={props.filterName}
-        placeholder={placeholder}
-      />
-      <FilterByCategory>
-        {categoriesMenu}
-      </FilterByCategory>
+      <InputGroup p='5px'>
+        <InputLeftElement
+          pointerEvents='none'
+          h={'100%'}
+          children={<SearchIcon color='gray.300' />}
+        />
+        <Input 
+          onChange={props.changeName}
+          value={props.filterName}
+          placeholder={placeholder} 
+        />
+      </InputGroup>
+      <Stack 
+      spacing={8} 
+      maxW='100vw' 
+      p={'5px'} 
+      direction='row' 
+      flexWrap={'nowrap'} 
+      overflow={{ base: 'scroll', md: 'auto', lg: 'auto' }}>
+      {categoriesMenu}
+      </Stack>
     </div>
   )
 }
