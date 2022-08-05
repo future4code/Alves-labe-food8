@@ -1,8 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import useRequestData from '../../Hooks/useRequestData'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Container, Logo, Title, Text } from './Styled'
+import { useParams } from 'react-router-dom'
+import {
+  Container,
+  RestaurantImage,
+  Title,
+  Text,
+  TextContainer
+} from './Styled'
 import GlobalStateContext from '../../global/GlobalStateContext'
 import RestaurantProductCard from '../../components/RestaurantProductCard/RestaurantProductCard'
 import Footer from '../../components/Footer/Footer'
@@ -18,7 +24,6 @@ const RestaurantPage = () => {
   useEffect(() => {
     setDetailsToGlobalState()
   }, [details])
-
 
   const setDetailsToGlobalState = () => {
     setters.setRestaurantsDetails(details?.restaurant)
@@ -46,18 +51,27 @@ const RestaurantPage = () => {
 
   return (
     <Container>
-      <Logo src={details.restaurant?.logoUrl} alt="Logo da empresa" />
+      <RestaurantImage
+        src={details.restaurant?.logoUrl}
+        alt="Logo da empresa"
+      />
       <Title>{details.restaurant?.name}</Title>
       <Text>{details.restaurant?.category}</Text>
-      <Text>
-        {details.restaurant?.deliveryTime} min Frete: R$
-        {details.restaurant?.shipping}
-        ,00
-      </Text>
+      <TextContainer>
+        <Text>
+          {details.restaurant?.deliveryTime - 10}-
+          {details.restaurant?.deliveryTime} min{' '}
+        </Text>
+        <Text>
+          Frete: R$
+          {details.restaurant?.shipping}
+          ,00
+        </Text>
+      </TextContainer>
       <Text>{details.restaurant?.address}</Text>
       <hr />
       {products}
-      <Footer/>
+      <Footer />
     </Container>
   )
 }

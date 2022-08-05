@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import GlobalStateContext from '../../global/GlobalStateContext'
 import { useDisclosure } from '@chakra-ui/react'
 import {
   Button,
@@ -9,7 +10,6 @@ import {
   ModalCloseButton,
   ModalBody,
   FormControl,
-  Input,
   FormLabel,
   ModalFooter
 } from '@chakra-ui/react'
@@ -18,13 +18,15 @@ export default function InitialFocus(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
   const finalRef = React.useRef()
-  const [quantity, setQuantity] = useState(0)
+  const [quantityInput, setQuantityInput] = useState(0)
+  const { states, setters } = useContext(GlobalStateContext)
 
   const onClickModal = e => {
-    props.handleQuantity(quantity)
-    setQuantity(0)
-    console.log(quantity)
-    alert(`Você adicionou ${quantity} ao carrinho!`)
+    setters.setQuantity(quantityInput)
+    setQuantityInput(0)
+    props.setQuantity(quantityInput)
+    alert(`Você adicionou ${quantityInput} ao carrinho!`)
+    console.log(states.quantity)
     // props.handleQuantity()
     // setQuantity(e.target.value)
   }
@@ -33,7 +35,7 @@ export default function InitialFocus(props) {
   //   e.preventDefault()
   // }
   const handleInput = e => {
-    setQuantity(e.target.value)
+    setQuantityInput(e.target.value)
   }
   return (
     <>
@@ -56,7 +58,7 @@ export default function InitialFocus(props) {
                 <input
                   list="quantity"
                   name="quantity"
-                  value={quantity}
+                  value={quantityInput}
                   onChange={handleInput}
                   placeholder="0"
                 />
