@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard'
 import Filter from '../../components/Filter/Filter'
+import OrderInProgess from '../../components/OrderInProgress/OrderInProgress'
+import GlobalStateContext from '../../global/GlobalStateContext'
 
 const FeedPage = () => {
 
-    const [restaurants, setRestaurants] = useState([])
-    const [filterNameValue, setFilterNameValue] = useState("")
-    const [filterCategoryValue, setFilterCategoryValue] = useState("Todos")
+  const [restaurants, setRestaurants] = useState([])
+  const [filterNameValue, setFilterNameValue] = useState("")
+  const [filterCategoryValue, setFilterCategoryValue] = useState("Todos")
+
+  const {states, setters, requests} = useContext(GlobalStateContext)
+
   const handleFilterName = event => {
     setFilterNameValue(event.target.value)
   }
 
-
   useEffect(() => {
     getRestaurants()
+    requests.getActiveOrder()
   }, [])
 
   const getRestaurants = () => {
     axios
       .get(`${BASE_URL}/restaurants`, {
-        headers: {
-          auth: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InY5THJ0TUFBQmtJcnF5REhNTm1yIiwibmFtZSI6ImZ1dHVyZUVhdHMiLCJlbWFpbCI6ImZ1dHVyZWVhdHNAbGFiZW51LmNvbSIsImNwZiI6IjI5OC41NDguMTExLTg1IiwiaGFzQWRkcmVzcyI6dHJ1ZSwiYWRkcmVzcyI6IlIuIEFmb25zbyBCcmF6LCAxNzcsIDcxIC0gVmlsYSBOLiBDb25jZWnDp8OjbyIsImlhdCI6MTY1OTM4NDc1M30.3HvDEVO_msI7fXDKsLe92a0MA30d_sVx33Pi68dXaoQ'
-        }
+        headers: HEADERS
       })
       .then(res => {
         setRestaurants(res.data.restaurants)
       })
       .catch(err => {
-        alert(err.response.data.message)
+        alert(err.response.data)
       })
   }
 
@@ -60,23 +63,22 @@ const FeedPage = () => {
       )
     })
 
-    
-    return (
-        <div>
-            FutureEatsC
-            <Filter
-                changeName={handleFilterName}
-                filterName={filterNameValue}
-                changeCategory={setFilterCategoryValue}
-                filterCategory={filterCategoryValue}
-            />
-            {restaurantsList}
-        </div>
-    )
+    console.log(states.activeOrder)
+  return (
+    <div>
+      FutureEatsC
+      <Filter
+        changeName={handleFilterName}
+        filterName={filterNameValue}
+        changeCategory={setFilterCategoryValue}
+        filterCategory={filterCategoryValue}
+      />
+      {states.activeOrder !== (null && undefined) ? <OrderInProgess /> : ""}
+
+      {restaurantsList}
+    </div>
+  )
 
 }
 export default FeedPage
 
-// .filter((restaurant) => {
-//     return (filterCategoryValue === "" ? restaurant : (restaurant.category.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "") === filterCategoryValue) )
-// })
