@@ -32,18 +32,25 @@ const ProfilePage = () => {
       })
   }
 
-  const orderHistoryList = orderHistory.map(order => {
+
+
+  const convertDate = (code) => {
+    const date = new Date (code)
+    const year = date.getFullYear()
+    const month = ("0" + (date.getMonth()+1)).slice(-2)
+    const day = ("0" + date.getDate()).slice(-2)
+    return (`${day}/${month}/${year}`)
+  }
+
+  const orderHistoryList = orderHistory.map((order) => {
     return (
-      <DivOrderCard>
-        {/* FALTA SABER COMO OS OBJETOS VEM PARA DEFINIR AS PROPRIEDADES */}
-        {/* <h4>{order.name}</h4>
-        <p>{order.date}</p>
-        <h3>{order.price}</h3> */}
+      <DivOrderCard key={order.createdAt}>
+        <h4>{order.restaurantName}</h4>
+        <p>{convertDate(order.createdAt)}</p>
+        <h3>SUBTOTAL: R${order.totalPrice.toFixed(2).replace(".", ",")}</h3>
       </DivOrderCard>
     )
   })
-
-  console.log(orderHistory)
 
   return (
     <Div1>
