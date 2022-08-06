@@ -5,7 +5,6 @@ import GlobalStateContext from "../../global/GlobalStateContext"
 import RestaurantProductCard from "../../components/RestaurantProductCard/RestaurantProductCard"
 import Cart from "../../components/Cart/Cart"
 
-
 const CartPage = () => {
     const { states, setters } = useContext(GlobalStateContext)
     const [pay, setPay] = useState("")
@@ -61,6 +60,7 @@ const CartPage = () => {
             price={product.price} />
     })
 
+
     return <Cart
         Products={Products}
         subTotal={subTotal}
@@ -69,5 +69,6 @@ const CartPage = () => {
         finalizeOrder={finalizeOrder}
 
     />
+
 }
 export default CartPage
