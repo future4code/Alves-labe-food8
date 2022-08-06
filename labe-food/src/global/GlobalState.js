@@ -35,12 +35,22 @@ const GlobalState = props => {
   }
 
   const getAddress = () => {
+    let newPreLoadedValues = {}
     axios
       .get(`${BASE_URL}/profile/address`, {
         headers: HEADERS
       })
       .then(response => {
         setAddress(response.data.address)
+        newPreLoadedValues = {
+          street: response.data.address.street,
+          number: response.data.address.number,
+          neighbourhood: response.data.address.neighbourhood,
+          city: response.data.address.city,
+          state: response.data.address.state,
+          complement: response.data.address.complement,
+        }
+        setPreloadedValues(newPreLoadedValues)
       })
       .catch(err => {
         console.log(err.response)

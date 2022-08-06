@@ -16,6 +16,8 @@ const NewAddressForm = () => {
   })
 
   const navigate = useNavigate()
+
+  const token = localStorage.getItem('token')
   
   const setAddress = (event) => {
     event.preventDefault()
@@ -23,7 +25,9 @@ const NewAddressForm = () => {
     let body = form
     axios
     .put(`${BASE_URL}/address`, body, {
-      headers: HEADERS
+      headers: {
+        auth: token
+      }
     })
     .then ((response) => {
       console.log(body)
@@ -31,7 +35,6 @@ const NewAddressForm = () => {
       goToFeed(navigate)
     })
     .catch ((err) => {
-      console.log(body)
       console.log(err.response)
     })
     clearFields()
