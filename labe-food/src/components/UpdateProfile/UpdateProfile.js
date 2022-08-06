@@ -17,10 +17,6 @@ const UpdateProfile = () => {
     requests.getProfile()
   }, [])
 
-  console.log(states.preLoadedValues)
-
-  console.log(form)
-
   const updateProfile = event => {
     requests.getProfile()
     let body = form
@@ -33,7 +29,7 @@ const UpdateProfile = () => {
         goToProfile(navigate)
       })
       .catch(err => {
-        console.log(err.response)
+        alert(err.response.message)
       })
     clearFields()
   }
@@ -44,7 +40,7 @@ const UpdateProfile = () => {
         <p>
           <input
             name="name"
-            placeholder={states.profile.name}
+            placeholder="Name"
             value={form.name}
             onChange={onChange}
             required
@@ -54,7 +50,7 @@ const UpdateProfile = () => {
         <p>
           <input
             name="email"
-            placeholder="email"
+            placeholder="E-mail"
             type="Email"
             value={form.email}
             onChange={onChange}

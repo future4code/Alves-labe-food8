@@ -50,7 +50,6 @@ const GlobalState = props => {
           state: response.data.address.state,
           complement: response.data.address.complement,
         }
-        console.log(response.data.address)
         setPreloadedValues(newPreLoadedValues)
       })
       .catch(err => {

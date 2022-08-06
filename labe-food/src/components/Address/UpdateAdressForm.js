@@ -6,6 +6,7 @@ import { useProtectedPage } from '../../Hooks/useProtectedPage'
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
+import Footer from '../Footer/Footer'
 
 const UpdateAddressForm = () => {
   const{states, setters, requests} = useContext(GlobalStateContext)
@@ -17,9 +18,6 @@ const UpdateAddressForm = () => {
   useEffect(() => {
     requests.getAddress()
   },[form])
-
-  
-  console.log(states.preLoadedValues)
 
   const updateAdress = event => {
     event.preventDefault()
@@ -88,7 +86,7 @@ const UpdateAddressForm = () => {
           <input
             name="state"
             placeholder="Estado"
-            value={form.sate}
+            value={form.state}
             onChange={onChange}
             required
           />
@@ -107,6 +105,7 @@ const UpdateAddressForm = () => {
           <button>Salvar</button>
         </p>
       </form>
+      <Footer/>
     </div>
   )
 }
