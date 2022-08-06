@@ -8,20 +8,30 @@ import GlobalStateContext from '../../global/GlobalStateContext'
 import Header from '../../components/Header/Header'
 import { Div1 } from './Styled'
 import Footer from '../../components/Footer/Footer'
+import { useProtectedPage } from '../../Hooks/useProtectedPage'
+import { goToAdressForm } from '../../routes/Coordinator'
+import { useNavigate } from 'react-router-dom'
 
 const FeedPage = () => {
   const [restaurants, setRestaurants] = useState([])
   const [filterNameValue, setFilterNameValue] = useState('')
   const [filterCategoryValue, setFilterCategoryValue] = useState('Todos')
+  const {states, setters, requests} = useContext(GlobalStateContext)
+
+  useProtectedPage()
+
+  const navigate = useNavigate()
   
   const handleFilterName = event => {
     setFilterNameValue(event.target.value)
   }
 
+  const token = localStorage.getItem('token')
+
   useEffect(() => {
     getRestaurants()
     requests.getActiveOrder()
-  }, [])
+  }, [token])
   
     const getRestaurants = () => {
         axios.get(`${BASE_URL}/restaurants`, {
@@ -30,7 +40,11 @@ const FeedPage = () => {
             .then((res) => {
                 setRestaurants(res.data.restaurants)
             }).catch((err) => {
+                console.log(err.response)
                 alert(err.response.data.message)
+                if (err.response.data.message == "Usuário não possui endereço cadastrado") {
+                  goToAdressForm(navigate)
+                }
             })
     }
 

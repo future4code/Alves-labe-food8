@@ -25,7 +25,6 @@ const SignUpForm = () => {
       .post(`${BASE_URL}/signup`, body)
       .then ((response) => {
         localStorage.setItem('token', response.data.token)
-        console.log(response.data)
         goToAdressForm(navigate)
       })
       .catch ((err) => {

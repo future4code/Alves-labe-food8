@@ -6,19 +6,26 @@ import {useProtectedPage} from "../../Hooks/useProtectedPage"
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
-import { GetProfile } from '../../services/GetUserInfo'
 
 const UpdateProfile = () => {
-  const {form, onChange, clearFields} = useForm({name:"", email:"", cpf:""})
+  const{states, setters, requests} = useContext(GlobalStateContext)
 
-  const{states, setters} = useContext(GlobalStateContext)
+
+  const {form, onChange, clearFields} = useForm(states.preLoadedValues)
+
+  useEffect(() => {
+    requests.getProfile()
+  },[form])
+
+ 
+  console.log(states.preLoadedValues)
 
   useProtectedPage()
 
   const navigate = useNavigate()
 
-  GetProfile()
-  console.log(states.profile)
+
+  console.log(form)
 
   
   const updateProfile = (event) => {
@@ -30,7 +37,7 @@ const UpdateProfile = () => {
       headers: HEADERS
     })
     .then ((response) => {
-      alert("Perfil atualizado.")
+      alert("Perfil atualizado com sucesso!")
       goToProfile(navigate)
     })
     .catch ((err) => {
@@ -47,7 +54,7 @@ const UpdateProfile = () => {
         <p>
           <input
             name="name"
-            placeholder="Nome"
+            placeholder={states.profile.name}
             value={form.name}
             onChange={onChange}
             required

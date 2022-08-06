@@ -5,19 +5,22 @@ import { useForm } from '../../Hooks/useForm'
 import {useProtectedPage} from "../../Hooks/useProtectedPage"
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
-import { GetAddress } from '../../services/GetUserInfo'
 import GlobalStateContext from '../../global/GlobalStateContext'
 
 const UpdateAddressForm = () => {
-  const {form, onChange, clearFields} = useForm({street:"", number:"", neighbourhood:"",  city:"", state:"", complement:"" })
+  const {form, setForm, onChange, clearFields} = useForm({street:"", number:"", neighbourhood:"",  city:"", state:"", complement:"" })
 
-  const{states, setters} = useContext(GlobalStateContext)
+  const{states, setters, requests} = useContext(GlobalStateContext)
 
   useProtectedPage()
 
   const navigate = useNavigate()
 
-  GetAddress()
+  useEffect(() => {
+    requests.getAddress()
+  },[])
+
+  
   console.log(states.address)
  
     
