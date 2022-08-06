@@ -9,8 +9,8 @@ const GlobalState = props => {
   const [productsCart, setProductsCart] = useState([])
   const [profile, setProfile] = useState({})
   const [address, setAddress] = useState({})
-  const [quantity, setQuantity] = useState(0)
-  const [currentRestaurant, setCurrentRestaurant]=useState("")
+  const [quantity, setQuantity] = useState([])
+  const [currentRestaurant, setCurrentRestaurant] = useState('')
   const [activeOrder, setActiveOrder] = useState()
   const [preLoadedValues, setPreloadedValues] = useState({})
 
@@ -49,20 +49,22 @@ const GlobalState = props => {
   }
 
   const getActiveOrder = () => {
-    axios.get(`${BASE_URL}/active-order`, {
-      headers: HEADERS
-    })
-    .then((res) => {
-      setActiveOrder(res.data.order)
-    })
-    .catch((err) => {
-      console.log(err.response.message)
-    })
+    axios
+      .get(`${BASE_URL}/active-order`, {
+        headers: HEADERS
+      })
+      .then(res => {
+        setActiveOrder(res.data.order)
+      })
+      .catch(err => {
+        alert(err.response.message)
+      })
   }
 
   const states = { restaurantDetails, productsCart, profile, address,quantity,currentRestaurant, activeOrder, preLoadedValues}
   const setters = { setRestaurantsDetails, setProductsCart, setProfile, setAddress,setQuantity,setCurrentRestaurant }
   const requests = {getProfile, getAddress, getActiveOrder}
+
 
   return (
     <GlobalStateContext.Provider value={{ states, setters, requests }}>
@@ -71,4 +73,3 @@ const GlobalState = props => {
   )
 }
 export default GlobalState
- 

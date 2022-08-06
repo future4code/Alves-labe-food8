@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { goToRestaurant } from '../../routes/Coordinator'
 import { RestaurantCardStyle } from './Styled'
 
-const RestaurantCard = (props) => {
+const RestaurantCard = props => {
   const navigate = useNavigate()
 
   return (
@@ -13,12 +13,13 @@ const RestaurantCard = (props) => {
       </div>
       <h2>{props.name}</h2>
       <section>
-        <h4>Entrega: {props.deliveryTime - 10} - {props.deliveryTime} min</h4>
-        <h4>Frete R${props.shipping},00</h4>
+        <h4>
+          Entrega: {props.deliveryTime - 10} - {props.deliveryTime} min
+        </h4>
+        <h4>Frete R${props.shipping.toFixed(2)}</h4>
       </section>
     </RestaurantCardStyle>
   )
 }
 
 export default RestaurantCard
-

@@ -25,7 +25,6 @@ export default function RestaurantProductCard(props) {
     if (product.currentRestaurant.id !== states.currentRestaurant.id) {
       setters.setProductsCart([product])
       setters.setCurrentRestaurant(product.currentRestaurant)
-      setters.setQuantity(1)
     } else {
       const productsInCart =
         states.productsCart &&
@@ -37,71 +36,65 @@ export default function RestaurantProductCard(props) {
           }
         })
       if (productsInCart.length === 0) {
-        setters.setQuantity(+1)
         setters.setProductsCart([...states.productsCart, props])
-      } else {
-        setters.setQuantity(states.quantity + 1)
-        states.productsCart.map(item => {
-          if (product.id === item.id) {
-            setters.setQuantity(states.quantity + 1)
-            return item
-          } else {
-            return item
-          }
-        })
       }
     }
   }
-  // console.log(states.quantity)
-  // console.log(states.productsCart)
 
   const remove = product => {
-    if (states.quantity === 1) {
-      const removeProduct =
-        states.productsCart &&
-        states.productsCart.filter(item => {
-          setters.setQuantity(0)
-          if (product.id !== item.id) {
-            return item
-          } else {
-            return false
-          }
-        })
-      setters.setProductsCart(removeProduct)
-    } else {
-      states.productsCart.map(item => {
-        if (product.id === item.id && states.quantity >= 1) {
-          setters.setQuantity(states.quantity - 1)
+    const removeProduct =
+      states.productsCart &&
+      states.productsCart.filter(item => {
+        if (product.id !== item.id) {
           return item
         } else {
-          return item
+          return false
         }
       })
+    setters.setProductsCart(removeProduct)
+    const removeQuantity =
+      states.quantity &&
+      states.quantity.filter(item => {
+        if (product.id !== item.id) {
+          return item
+        } else {
+          return false
+        }
+      })
+    setters.setQuantity(removeQuantity)
+
+    if (states.productsCart.length < 1) {
+      return setters.setCurrentRestaurant('')
     }
   }
 
-  const handleQuantity = quantity => {
-    setQuantity(quantity + 1)
-  }
-  console.log(states.quantity)
+  const quantityTrue = states.quantity
+    .filter(item => {
+      if (item.id === props.id) {
+        return item
+      }
+    })
+    .map(item => {
+      return Number(item.quantity)
+    })
   return (
     <ContainerCard key={props.id}>
       <ProductImage src={props.photoUrl} alt="Foto do produto" />
       <ContainerText>
         <Title>{props.name}</Title>
-        <QuantityNumber>{quantity ? quantity : ''}</QuantityNumber>
+        <QuantityNumber>{quantityTrue ? quantityTrue[0] : ''}</QuantityNumber>
         <DescriptionText>{props.description}</DescriptionText>
-        <Price>R${props.price}</Price>
-        <button onClick={() => handleQuantityCart(props)}>Adicionar</button>
+        <Price>R${props.price.toFixed(2)}</Price>
 
         <ContainerButton>
-          {quantity ? (
+          {quantityTrue[0] > 0 ? (
             <RemoveButton onClick={() => remove(props)}>Remover</RemoveButton>
           ) : (
             <Modal
-              handleQuantity={handleQuantity}
+              handleQuantityCart={handleQuantityCart}
               setQuantity={setQuantity}
               quantity={quantity}
+              product={props}
             />
           )}
         </ContainerButton>

@@ -1,13 +1,19 @@
 import React from 'react'
-import {BASE_URL, HEADERS} from '../../constants/BASE_URL'
+import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from '../../Hooks/useForm'
-import {useUnprotectedPage} from '../../Hooks/useUnprotectedPage'
 import axios from 'axios'
 import { goToFeed } from '../../routes/Coordinator'
 
 const NewAddressForm = () => {
-  const {form, onChange, clearFields} = useForm({street:"", number:"", neighbourhood:"",  city:"", state:"", complement:"" })
+  const { form, onChange, clearFields } = useForm({
+    street: '',
+    number: '',
+    neighbourhood: '',
+    city: '',
+    state: '',
+    complement: ''
+  })
 
   const navigate = useNavigate()
   
@@ -31,7 +37,6 @@ const NewAddressForm = () => {
     clearFields()
   }
 
-
   return (
     <div>
       <form onSubmit={setAddress}>
@@ -42,27 +47,27 @@ const NewAddressForm = () => {
             value={form.street}
             onChange={onChange}
             required
-            />
+          />
         </p>
 
         <p>
-          <input 
+          <input
             name="number"
             placeholder="Número"
             value={form.number}
             onChange={onChange}
             required
-            />
+          />
         </p>
-        
+
         <p>
-          <input 
+          <input
             name="neighbourhood"
             placeholder="Bairro"
             value={form.neighbourhood}
             onChange={onChange}
             required
-            />
+          />
         </p>
 
         <p>
@@ -82,7 +87,7 @@ const NewAddressForm = () => {
             value={form.state}
             onChange={onChange}
             required
-          />  
+          />
         </p>
 
         <p>
@@ -91,10 +96,12 @@ const NewAddressForm = () => {
             placeholder="Complemento"
             value={form.complement}
             onChange={onChange}
-          />  
+          />
         </p>
 
-        <p><button>Salvar</button></p>
+        <p>
+          <button>Salvar</button>
+        </p>
       </form>
     </div>
   )

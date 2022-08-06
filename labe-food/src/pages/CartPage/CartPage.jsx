@@ -3,18 +3,23 @@ import { useContext, useEffect, useState } from "react"
 import { BASE_URL } from "../../constants/BASE_URL"
 import GlobalStateContext from "../../global/GlobalStateContext"
 import RestaurantProductCard from "../../components/RestaurantProductCard/RestaurantProductCard"
-import Footer from "../../components/Footer/Footer"
-import Header from "../../components/Header/Header"
-import {AddressStyled, LabelTextStyled,TextStyled, NameRestaurant, Text, CartText, PaymentContainer, Button} from './Styled'
+import Cart from "../../components/Cart/Cart"
 
 const CartPage = () => {
-    const { states } = useContext(GlobalStateContext)
+    const { states, setters } = useContext(GlobalStateContext)
+    const [pay, setPay] = useState("")
 
-console.log(states.currentRestaurant.id)
+    useEffect(() => {
+        if (states.productsCart.length < 1) {
+            return setters.setCurrentRestaurant("")
+        }
+    }, [states.productsCart])
+
+
     const finalizeOrder = () => {
         const body = {
             products: idAndQuantity,
-            paymentMethod: "creditcard"
+            paymentMethod: pay
         }
         axios
             .post(`${BASE_URL}/restaurants/${states.currentRestaurant.id}/order`, body, {
@@ -23,17 +28,24 @@ console.log(states.currentRestaurant.id)
                 }
             }).then((resp) => {
                 alert("Seu pedido foi envidado com sucesso")
+                setters.setQuantity([])
+                setters.setProductsCart([])
             }).catch((err) => {
-                alert(err.message)
+                alert(err.response.data.message)
             })
     }
 
-    const idAndQuantity = states.productsCart && states.productsCart.map((item) => {
-        return { id: item.id, quantity: 2 }
+    const handlePay = (e) => {
+        setPay(e.target.value)
+    }
+    console.log(pay)
+    const idAndQuantity = states.quantity && states.quantity.map((item) => {
+        return { id: item.id, quantity: Number(item.quantity) }
     })
+
     const initialValue = 0
-    const subTotal = states.productsCart && states.productsCart.map((product) => {
-        return +product.price * 2
+    const subTotal = states.quantity && states.quantity.map((product) => {
+        return product.price * product.quantity
     }).reduce((previousValue, currentValue) => previousValue + currentValue,
         initialValue
     )
@@ -45,38 +57,18 @@ console.log(states.currentRestaurant.id)
             photoUrl={product.photoUrl}
             name={product.name}
             description={product.description}
-            price={product.price}
-            
-        />
+            price={product.price} />
     })
-    console.log(states.address)
-    return (
-        <>
-            <Header title={"Meu Carrinho"}/>
-            <AddressStyled>
-                <LabelTextStyled>Endereço de entrega:</LabelTextStyled>
-                <TextStyled>endereço</TextStyled>
-            </AddressStyled>
-            <div>
-                
-                <NameRestaurant>nome do restaurante:{states.currentRestaurant.name}</NameRestaurant>
-                <Text>endereço do restaurante:{states.currentRestaurant.address}</Text>
-                <Text>tempo de entrega:{states.currentRestaurant.deliveryTime}</Text>
 
-                <CartText>{states.productsCart[0] === undefined ? "O carrinho esta vazio" : Products}</CartText>
-            </div>
-             {/* <div>
-                <p>frete :{states.currentRestaurant.shipping?states.currentRestaurant.shipping:0}</p>
-                <p> subtotal : {subTotal}</p>
-            </div> */}
-            <PaymentContainer>
-                <p>Forma de pagamento</p>
-                <hr/>
-                <Button onClick={finalizeOrder}> CONFIRMAR</Button>
-            </PaymentContainer> 
-            <Footer />
 
-        </>
-    )
+    return <Cart
+        Products={Products}
+        subTotal={subTotal}
+        idAndQuantity={idAndQuantity}
+        handlePay={handlePay}
+        finalizeOrder={finalizeOrder}
+
+    />
+
 }
 export default CartPage

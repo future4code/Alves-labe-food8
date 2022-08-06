@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useContext } from 'react'
 import GlobalStateContext from '../../global/GlobalStateContext'
+import { OrderCard, WhiteTitle, BlackTitle, TotalPrice, Clock } from './Styled'
+import clock from '../../assets/clock.png'
 
 const OrderInProgress = () => {
     const { states, setters, requests } = useContext(GlobalStateContext)
@@ -10,11 +12,12 @@ const OrderInProgress = () => {
     }, [])
 
     return ( 
-        <div>
-            <h2>Pedido em andamento</h2>
-            <h3>{states.activeOrder?.restaurantName}</h3>
-            <h3>SUBTOTAL R${states.activeOrder?.totalPrice.toFixed(2)}</h3>
-        </div>
+        <OrderCard>
+            <Clock src={clock} />
+            <WhiteTitle>Pedido em andamento</WhiteTitle>
+            <BlackTitle>{states.activeOrder?.restaurantName}</BlackTitle>
+            <TotalPrice>SUBTOTAL R${states.activeOrder?.totalPrice.toFixed(2)}</TotalPrice>
+        </OrderCard>
     )
 }
 
