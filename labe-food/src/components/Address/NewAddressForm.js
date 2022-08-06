@@ -16,28 +16,30 @@ const NewAddressForm = () => {
   })
 
   const navigate = useNavigate()
-
-  const setAdress = event => {
+  
+  const setAddress = (event) => {
     event.preventDefault()
 
     let body = form
     axios
-      .put(`${BASE_URL}/address`, body, {
-        headers: HEADERS
-      })
-      .then(response => {
-        localStorage.setItem('token', response.data.token)
-        goToFeed(navigate)
-      })
-      .catch(err => {
-        alert(err.response.data.message)
-      })
+    .put(`${BASE_URL}/address`, body, {
+      headers: HEADERS
+    })
+    .then ((response) => {
+      console.log(body)
+      localStorage.setItem('token', response.data.token)
+      goToFeed(navigate)
+    })
+    .catch ((err) => {
+      console.log(body)
+      console.log(err.response)
+    })
     clearFields()
   }
 
   return (
     <div>
-      <form onSubmit={setAdress}>
+      <form onSubmit={setAddress}>
         <p>
           <input
             name="street"
@@ -74,8 +76,6 @@ const NewAddressForm = () => {
             placeholder="Cidade"
             value={form.city}
             onChange={onChange}
-            pattern=".{6,30}"
-            title="Senha deve possuir no mínimo 6 e no máximo 30 caracteres"
             required
           />
         </p>
@@ -84,7 +84,7 @@ const NewAddressForm = () => {
           <input
             name="state"
             placeholder="Estado"
-            value={form.sate}
+            value={form.state}
             onChange={onChange}
             required
           />
