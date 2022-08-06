@@ -1,26 +1,26 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
-import styled from "styled-components"
 import { BASE_URL } from "../../constants/BASE_URL"
 import GlobalStateContext from "../../global/GlobalStateContext"
 import RestaurantProductCard from "../../components/RestaurantProductCard/RestaurantProductCard"
-import Footer from "../../components/Footer/Footer"
+import Cart from "../../components/Cart/Cart"
 
-const AddressStyled = styled.div`
-    background-color: #B8B8B8;
-    min-height: 100%;
-    p{
-    color: #000000 25%;
-    }
-`
+
 const CartPage = () => {
-    const { states } = useContext(GlobalStateContext)
+    const { states, setters } = useContext(GlobalStateContext)
+    const [pay, setPay] = useState("")
 
-console.log(states.currentRestaurant.id)
+    useEffect(() => {
+        if (states.productsCart.length < 1) {
+            return setters.setCurrentRestaurant("")
+        }
+    }, [states.productsCart])
+
+
     const finalizeOrder = () => {
         const body = {
             products: idAndQuantity,
-            paymentMethod: "creditcard"
+            paymentMethod: pay
         }
         axios
             .post(`${BASE_URL}/restaurants/${states.currentRestaurant.id}/order`, body, {
@@ -29,17 +29,24 @@ console.log(states.currentRestaurant.id)
                 }
             }).then((resp) => {
                 alert("Seu pedido foi envidado com sucesso")
+                setters.setQuantity([])
+                setters.setProductsCart([])
             }).catch((err) => {
                 alert(err.message)
             })
     }
 
-    const idAndQuantity = states.productsCart && states.productsCart.map((item) => {
-        return { id: item.id, quantity: 2 }
+    const handlePay = (e) => {
+        setPay(e.target.value)
+    }
+    console.log(pay)
+    const idAndQuantity = states.quantity && states.quantity.map((item) => {
+        return { id: item.id, quantity: Number(item.quantity) }
     })
+
     const initialValue = 0
-    const subTotal = states.productsCart && states.productsCart.map((product) => {
-        return +product.price * 2
+    const subTotal = states.quantity && states.quantity.map((product) => {
+        return product.price * product.quantity
     }).reduce((previousValue, currentValue) => previousValue + currentValue,
         initialValue
     )
@@ -51,35 +58,16 @@ console.log(states.currentRestaurant.id)
             photoUrl={product.photoUrl}
             name={product.name}
             description={product.description}
-            price={product.price}
-            
-        />
+            price={product.price} />
     })
-    console.log(states.address)
-    return (
-        <div>
-            <AddressStyled>
-                <p>Endereço de entrega</p>
-                <p>endereço</p>
-            </AddressStyled>
-            <div>
-                <p>nome do restaurante:{states.currentRestaurant.name}</p>
-                <p>endereço do restaurante:{states.currentRestaurant.address}</p>
-                <p>tempo de entrega:{states.currentRestaurant.deliveryTime}</p>
 
-                {states.productsCart[0] === undefined ? "O carrinho esta vazio" : Products}
-            </div>
-            <div>
-                <p>frete :{states.currentRestaurant.shipping?states.currentRestaurant.shipping:0}</p>
-                <p> subtotal : {subTotal}</p>
-            </div>
-            <div>
-                <p>forma de pagamento</p>
-                <button onClick={finalizeOrder}> confirmar</button>
-            </div>
-            <Footer />
+    return <Cart
+        Products={Products}
+        subTotal={subTotal}
+        idAndQuantity={idAndQuantity}
+        handlePay={handlePay}
+        finalizeOrder={finalizeOrder}
 
-        </div>
-    )
+    />
 }
 export default CartPage

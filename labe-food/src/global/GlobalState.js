@@ -7,7 +7,7 @@ const GlobalState = props => {
   const [productsCart, setProductsCart] = useState([])
   const [profile, setProfile] = useState({})
   const [address, setAddress] = useState({})
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState([])
   const [currentRestaurant, setCurrentRestaurant]=useState("")
   const states = { restaurantDetails, productsCart, profile, address,quantity,currentRestaurant }
   const setters = { setRestaurantsDetails, setProductsCart, setProfile, setAddress,setQuantity,setCurrentRestaurant }
