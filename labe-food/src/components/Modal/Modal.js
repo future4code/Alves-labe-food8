@@ -19,10 +19,11 @@ export default function InitialFocus(props) {
   const initialRef = React.useRef()
   const finalRef = React.useRef()
 
-  const [quantityInput, setQuantityInput] = useState('')
+  const [quantityInput, setQuantityInput] = useState()
   const { states, setters } = useContext(GlobalStateContext)
 
   const onClickModal = e => {
+    if(quantityInput>0){
     setters.setQuantity([
       ...states.quantity,
       {
@@ -35,6 +36,7 @@ export default function InitialFocus(props) {
     props.setQuantity(quantityInput)
     props.handleQuantityCart(props.product)
     alert(`Você adicionou ${quantityInput} ao carrinho!`)
+  }else{alert("escolha uma quantidade")}
   }
 
   const handleInput = e => {
@@ -66,6 +68,7 @@ export default function InitialFocus(props) {
                   onChange={handleInput}
                   placeholder="0"
                   type={'number'}
+                  min= "1"
                 />
                 <datalist id="quantity">
                   <option value={1} />
