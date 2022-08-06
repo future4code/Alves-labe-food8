@@ -73,9 +73,11 @@ const FeedPage = () => {
         changeCategory={setFilterCategoryValue}
         filterCategory={filterCategoryValue}
       />
+      
+      {restaurantsList}
+      
       {states.activeOrder !== (null && undefined) ? <OrderInProgess /> : ''}
 
-      {restaurantsList}
       <Footer />
     </Div1>
   )
