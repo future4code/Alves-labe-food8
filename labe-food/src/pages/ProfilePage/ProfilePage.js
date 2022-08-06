@@ -28,26 +28,24 @@ const ProfilePage = () => {
         }
       })
       .catch(err => {
-        console.log(err)
+        alert(err.response.data.message)
       })
   }
 
-
-
-  const convertDate = (code) => {
-    const date = new Date (code)
+  const convertDate = code => {
+    const date = new Date(code)
     const year = date.getFullYear()
-    const month = ("0" + (date.getMonth()+1)).slice(-2)
-    const day = ("0" + date.getDate()).slice(-2)
-    return (`${day}/${month}/${year}`)
+    const month = ('0' + (date.getMonth() + 1)).slice(-2)
+    const day = ('0' + date.getDate()).slice(-2)
+    return `${day}/${month}/${year}`
   }
 
-  const orderHistoryList = orderHistory.map((order) => {
+  const orderHistoryList = orderHistory.map(order => {
     return (
       <DivOrderCard key={order.createdAt}>
         <h4>{order.restaurantName}</h4>
         <p>{convertDate(order.createdAt)}</p>
-        <h3>SUBTOTAL: R${order.totalPrice.toFixed(2).replace(".", ",")}</h3>
+        <h3>SUBTOTAL: R${order.totalPrice.toFixed(2).replace('.', ',')}</h3>
       </DivOrderCard>
     )
   })

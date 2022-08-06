@@ -1,41 +1,49 @@
 import { useContext, useEffect, useState } from "react"
 import GlobalStateContext from "../../global/GlobalStateContext"
 import Footer from "../../components/Footer/Footer"
+import Header from "../../components/Header/Header"
+import {AddressStyled,LabelTextStyled,TextStyled,Container, NameRestaurant, Text, CartText, PaymentContainer, Button, Cards} from './Styled'
+
 
 
 const Cart = ({Products,subTotal,finalizeOrder,handlePay}) => {
     const { states } = useContext(GlobalStateContext)
 
 return (
-    <div>
+    <Container>
+        <Header title={"Meu carrinho"}/>
+        <AddressStyled>
+            <LabelTextStyled>Endereço de entrega:</LabelTextStyled>
+            <TextStyled>{states.currentRestaurant.address?states.currentRestaurant.address:"Não há pedidos no carrinho"}</TextStyled>
+        </AddressStyled>
         <div>
-            <p>Endereço de entrega</p>
-            <p>endereço</p>
-        </div>
-        <div>
-            {states.productsCart[0] === undefined ? "O carrinho esta vazio" : <div>
-                <p>nome do restaurante:{states.currentRestaurant.name}</p>
-                <p>endereço do restaurante:{states.currentRestaurant.address}</p>
-                <p>tempo de entrega:{states.currentRestaurant.deliveryTime}</p>
+            
+            {states.productsCart[0] === undefined ?<CartText> O carrinho esta vazio</CartText> : 
+            
+            <Cards>
+                <NameRestaurant>{states.currentRestaurant.name}</NameRestaurant>
+                <p>{states.currentRestaurant.address}</p>
+                <p>Tempo de entrega: {states.currentRestaurant.deliveryTime} min</p>
                 {Products}
-            </div>}
+            </Cards>}
         </div>
         <div>
-            <p>frete :{states.currentRestaurant.shipping ? states.currentRestaurant.shipping : 0}</p>
-            <p> subtotal : {subTotal ? subTotal + states.currentRestaurant.shipping : 0}</p>
+            <Text> Frete: {states.currentRestaurant.shipping ? states.currentRestaurant.shipping : 0}</Text>
+            <Text> Subtotal : {subTotal ? subTotal + states.currentRestaurant.shipping : 0}</Text>
         </div>
-        <div>
-            <p>forma de pagamento</p>
+        <PaymentContainer>
+            <p>Forma de pagamento</p>
+            <hr/>
             <select onChange={handlePay} >
-                <option value={""}>selecione o pagamento</option>
-                <option value={"creditcard"}>credito</option>
-                <option value={"money"}>dinheiro</option>
+                <option value={""}>Selecione o pagamento</option>
+                <option value={"creditcard"}>Cartão de crédito</option>
+                <option value={"money"}>Dinheiro</option>
             </select>
-            <button onClick={finalizeOrder}> confirmar</button>
-        </div>
+            <Button onClick={finalizeOrder}> CONFIRMAR</Button>
+        </PaymentContainer>
         <Footer />
 
-    </div>
+    </Container>
 )
 }
 export default Cart
