@@ -14,14 +14,13 @@ const GlobalState = props => {
   const [activeOrder, setActiveOrder] = useState()
   const [preLoadedValues, setPreloadedValues] = useState({})
 
-
   const getProfile = () => {
-      let newPreLoadedValues = {}
-      axios
+    let newPreLoadedValues = {}
+    axios
       .get(`${BASE_URL}/profile`, {
         headers: HEADERS
       })
-      .then ((response) => {
+      .then(response => {
         setProfile(response.data.user)
         newPreLoadedValues = {
           name: response.data.user.name,
@@ -30,21 +29,21 @@ const GlobalState = props => {
         }
         setPreloadedValues(newPreLoadedValues)
       })
-      .catch ((err) => {
+      .catch(err => {
         console.log(err.response)
       })
   }
-  
+
   const getAddress = () => {
-      axios
+    axios
       .get(`${BASE_URL}/profile/address`, {
         headers: HEADERS
       })
-      .then ((response) => {
+      .then(response => {
         setAddress(response.data.address)
       })
-      .catch ((err) => {
-         console.log(err.response)
+      .catch(err => {
+        console.log(err.response)
       })
   }
 
@@ -57,14 +56,29 @@ const GlobalState = props => {
         setActiveOrder(res.data.order)
       })
       .catch(err => {
-        alert(err.response.message)
+        console(err.response.message)
       })
   }
 
-  const states = { restaurantDetails, productsCart, profile, address,quantity,currentRestaurant, activeOrder, preLoadedValues}
-  const setters = { setRestaurantsDetails, setProductsCart, setProfile, setAddress,setQuantity,setCurrentRestaurant }
-  const requests = {getProfile, getAddress, getActiveOrder}
-
+  const states = {
+    restaurantDetails,
+    productsCart,
+    profile,
+    address,
+    quantity,
+    currentRestaurant,
+    activeOrder,
+    preLoadedValues
+  }
+  const setters = {
+    setRestaurantsDetails,
+    setProductsCart,
+    setProfile,
+    setAddress,
+    setQuantity,
+    setCurrentRestaurant
+  }
+  const requests = { getProfile, getAddress, getActiveOrder }
 
   return (
     <GlobalStateContext.Provider value={{ states, setters, requests }}>
