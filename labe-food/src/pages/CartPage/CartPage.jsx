@@ -38,7 +38,6 @@ const CartPage = () => {
     const handlePay = (e) => {
         setPay(e.target.value)
     }
-    console.log(pay)
     const idAndQuantity = states.quantity && states.quantity.map((item) => {
         return { id: item.id, quantity: Number(item.quantity) }
     })

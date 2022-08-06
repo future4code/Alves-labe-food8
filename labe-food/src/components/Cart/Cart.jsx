@@ -32,13 +32,12 @@ return (
             <Text> Subtotal : {subTotal ? subTotal + states.currentRestaurant.shipping : 0}</Text>
         </div>
         <PaymentContainer>
-            <p>Forma de pagamento</p>
-            <hr/>
             <select onChange={handlePay} >
                 <option value={""}>Selecione o pagamento</option>
                 <option value={"creditcard"}>Cartão de crédito</option>
                 <option value={"money"}>Dinheiro</option>
             </select>
+            <hr/>
             <Button onClick={finalizeOrder}> CONFIRMAR</Button>
         </PaymentContainer>
         <Footer />

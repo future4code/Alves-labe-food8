@@ -6,41 +6,35 @@ import { useProtectedPage } from '../../Hooks/useProtectedPage'
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
-
+import Footer from '../../components/Footer/Footer'
 const UpdateProfile = () => {
-  const{states, setters, requests} = useContext(GlobalStateContext)
-
-
-  const {form, onChange, clearFields} = useForm(states.preLoadedValues)
+  const { states, setters, requests } = useContext(GlobalStateContext)
+  const { form, onChange, clearFields } = useForm(states?.preLoadedValues)
+  const navigate = useNavigate()
+  useProtectedPage()
 
   useEffect(() => {
     requests.getProfile()
-  },[form])
- 
+  }, [])
+
   console.log(states.preLoadedValues)
-
-  useProtectedPage()
-
-  const navigate = useNavigate()
-
 
   console.log(form)
 
   const updateProfile = event => {
-    event.preventDefault()
-
+    requests.getProfile()
     let body = form
     axios
-    .put(`${BASE_URL}/profile`, body, {
-      headers: HEADERS
-    })
-    .then ((response) => {
-      alert("Perfil atualizado com sucesso!")
-      goToProfile(navigate)
-    })
-    .catch ((err) => {
-       console.log(err.response)
-    })
+      .put(`${BASE_URL}/profile`, body, {
+        headers: HEADERS
+      })
+      .then(response => {
+        alert('Perfil atualizado com sucesso!')
+        goToProfile(navigate)
+      })
+      .catch(err => {
+        console.log(err.response)
+      })
     clearFields()
   }
 
@@ -84,6 +78,7 @@ const UpdateProfile = () => {
           <button>Salvar</button>
         </p>
       </form>
+      <Footer />
     </div>
   )
 }
