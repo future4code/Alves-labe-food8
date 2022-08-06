@@ -8,20 +8,18 @@ import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
 
 const UpdateAddressForm = () => {
-  const {form, setForm, onChange, clearFields} = useForm({street:"", number:"", neighbourhood:"",  city:"", state:"", complement:"" })
-
   const{states, setters, requests} = useContext(GlobalStateContext)
-
-  useProtectedPage()
+  const { form, onChange, clearFields } = useForm(states?.preLoadedValues)
 
   const navigate = useNavigate()
+  useProtectedPage()
 
   useEffect(() => {
     requests.getAddress()
-  },[])
+  },[form])
 
   
-  console.log(states.address)
+  console.log(states.preLoadedValues)
 
   const updateAdress = event => {
     event.preventDefault()
