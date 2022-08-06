@@ -23,7 +23,9 @@ const NewAddressForm = () => {
     let body = form
     axios
     .put(`${BASE_URL}/address`, body, {
-      headers: HEADERS
+      headers: {
+        auth: localStorage.getItem('token')
+      }
     })
     .then ((response) => {
       console.log(body)

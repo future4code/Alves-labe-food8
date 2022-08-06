@@ -32,7 +32,9 @@ const UpdateProfile = () => {
     let body = form
     axios
     .put(`${BASE_URL}/profile`, body, {
-      headers: HEADERS
+      headers: {
+        auth: localStorage.getItem('token')
+      }
     })
     .then ((response) => {
       alert("Perfil atualizado com sucesso!")
