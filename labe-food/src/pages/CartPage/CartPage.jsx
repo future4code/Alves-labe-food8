@@ -31,7 +31,7 @@ const CartPage = () => {
                 setters.setQuantity([])
                 setters.setProductsCart([])
             }).catch((err) => {
-                alert(err.message)
+                alert(err.response.data.message)
             })
     }
 

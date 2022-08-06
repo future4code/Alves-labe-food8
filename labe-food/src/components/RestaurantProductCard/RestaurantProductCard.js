@@ -12,7 +12,6 @@ import {
   RemoveButton
 } from './Styled'
 import Modal from '../Modal/Modal'
-import { filter } from '@chakra-ui/react'
 
 export default function RestaurantProductCard(props) {
   const { states, setters } = useContext(GlobalStateContext)
@@ -41,58 +40,58 @@ export default function RestaurantProductCard(props) {
       }
     }
   }
-  // console.log(states.quantity)
-  // console.log(states.productsCart)
 
   const remove = product => {
-      const removeProduct =
-        states.productsCart &&
-        states.productsCart.filter(item => {
-          if (product.id !== item.id) {
-            return item
-          } else {
-            return false
-          }
-        })
-      setters.setProductsCart(removeProduct)
-      const removeQuantity =
-      states.quantity&&states.quantity.filter(item => {
+    const removeProduct =
+      states.productsCart &&
+      states.productsCart.filter(item => {
         if (product.id !== item.id) {
           return item
         } else {
           return false
         }
       })
-        setters.setQuantity(removeQuantity)
-        
-        if(states.productsCart.length<1 ){
-          return setters.setCurrentRestaurant("")
+    setters.setProductsCart(removeProduct)
+    const removeQuantity =
+      states.quantity &&
+      states.quantity.filter(item => {
+        if (product.id !== item.id) {
+          return item
+        } else {
+          return false
         }
-    } 
+      })
+    setters.setQuantity(removeQuantity)
 
+    if (states.productsCart.length < 1) {
+      return setters.setCurrentRestaurant('')
+    }
+  }
 
-
-
-  const quantityTrue=states.quantity.filter((item)=>{
-
-    if(item.id===props.id){return item}
-  }).map((item)=>{return Number(item.quantity)})
+  const quantityTrue = states.quantity
+    .filter(item => {
+      if (item.id === props.id) {
+        return item
+      }
+    })
+    .map(item => {
+      return Number(item.quantity)
+    })
   return (
     <ContainerCard key={props.id}>
       <ProductImage src={props.photoUrl} alt="Foto do produto" />
       <ContainerText>
         <Title>{props.name}</Title>
-        <QuantityNumber>{quantityTrue ? quantityTrue[0]:"" }</QuantityNumber>
+        <QuantityNumber>{quantityTrue ? quantityTrue[0] : ''}</QuantityNumber>
         <DescriptionText>{props.description}</DescriptionText>
         <Price>R${props.price.toFixed(2)}</Price>
-        {/* <button onClick={() => handleQuantityCart(props)}>Adicionar</button> */}
 
         <ContainerButton>
-          {quantityTrue[0] >0 ? (
+          {quantityTrue[0] > 0 ? (
             <RemoveButton onClick={() => remove(props)}>Remover</RemoveButton>
           ) : (
             <Modal
-            handleQuantityCart={handleQuantityCart}
+              handleQuantityCart={handleQuantityCart}
               setQuantity={setQuantity}
               quantity={quantity}
               product={props}
