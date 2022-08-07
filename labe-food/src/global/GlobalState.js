@@ -15,13 +15,18 @@ const GlobalState = props => {
   const [preLoadedProfileValues, setPreloadedProfileValues] = useState({})
   const [preLoadedAddressValues, setPreloadedAddressValues] = useState({})
 
+
   const getProfile = () => {
+    const token = localStorage.getItem('token')
     let newPreLoadedValues = {}
     axios
       .get(`${BASE_URL}/profile`, {
-        headers: HEADERS
+        headers: {
+          auth: token
+        }
       })
       .then(response => {
+        console.log(response.data)
         setProfile(response.data.user)
         newPreLoadedValues = {
           name: response.data.user.name,
@@ -36,10 +41,13 @@ const GlobalState = props => {
   }
 
   const getAddress = () => {
+    const token = localStorage.getItem('token')
     let newPreLoadedValues = {}
     axios
       .get(`${BASE_URL}/profile/address`, {
-        headers: HEADERS
+        headers: {
+          auth: token
+        }
       })
       .then(response => {
         setAddress(response.data.address)
@@ -58,6 +66,7 @@ const GlobalState = props => {
       })
   }
 
+
   const getActiveOrder = () => {
     axios
       .get(`${BASE_URL}/active-order`, {
@@ -67,7 +76,7 @@ const GlobalState = props => {
         setActiveOrder(res.data.order)
       })
       .catch(err => {
-        console(err.response.message)
+        console.log(err.response.message)
       })
   }
 

@@ -12,9 +12,8 @@ import GlobalStateContext from '../../global/GlobalStateContext'
 
 
 const ProfilePage = () => {
-
   const{states, setters, requests} = useContext(GlobalStateContext)
-
+  
   const navigate = useNavigate()
   useProtectedPage()
   
@@ -26,10 +25,16 @@ const ProfilePage = () => {
     requests.getAddress()
   }, [])
 
+  console.log(states.address)
+
+  const token = localStorage.getItem('token')
+
   const getOrderHistory = () => {
     axios
       .get(`${BASE_URL}/orders/history`, {
-        headers: HEADERS
+        headers: {
+          auth: token
+        }
       })
       .then(res => {
         if (res.data.orders !== null) {
@@ -71,7 +76,7 @@ const ProfilePage = () => {
       </Div2>
       <Div3>
         <h3>Endereço cadastrado</h3>
-        <p>Rua {states.address.street}, {states.address.number} - {states.address.city}</p>
+        <p>{states.address.street}, {states.address.number} - {states.address.city}</p>
         <img src={Edit} onClick={() => goToEditAdress(navigate)} />
       </Div3>
       <Div4>

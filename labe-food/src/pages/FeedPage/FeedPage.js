@@ -20,6 +20,8 @@ const FeedPage = () => {
 
   useProtectedPage()
 
+
+
   const navigate = useNavigate()
 
   const handleFilterName = event => {
@@ -31,16 +33,17 @@ const FeedPage = () => {
   useEffect(() => {
     getRestaurants()
     requests.getActiveOrder()
-  }, [token])
+  }, [])
 
   const getRestaurants = () => {
     axios.get(`${BASE_URL}/restaurants`, {
-      headers: HEADERS
+      headers: {
+        auth: token
+      }
     })
       .then((res) => {
         setRestaurants(res.data.restaurants)
       }).catch((err) => {
-        console.log(err.response)
         alert(err.response.data.message)
         if (err.response.data.message == "Usuário não possui endereço cadastrado") {
           goToAdressForm(navigate)
