@@ -29,7 +29,9 @@ const ProfilePage = () => {
   const getOrderHistory = () => {
     axios
       .get(`${BASE_URL}/orders/history`, {
-        headers: HEADERS
+        headers: {
+          auth: localStorage.getItem('token')
+        }
       })
       .then(res => {
         if (res.data.orders !== null) {

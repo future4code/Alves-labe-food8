@@ -35,7 +35,9 @@ const FeedPage = () => {
 
   const getRestaurants = () => {
     axios.get(`${BASE_URL}/restaurants`, {
-      headers: HEADERS
+      headers: {
+        auth: localStorage.getItem('token')
+      }
     })
       .then((res) => {
         setRestaurants(res.data.restaurants)

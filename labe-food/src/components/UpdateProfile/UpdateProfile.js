@@ -26,19 +26,18 @@ const UpdateProfile = () => {
 
     let body = form
     axios
-      .put(`${BASE_URL}/profile`, body, {
-        headers: {
-          auth: token
-        }
-      })
-      .then((response) => {
-        alert('Perfil atualizado com sucesso!')
-        goToProfile(navigate)
-      })
-      .catch(err => {
-        console.log(err)
-        alert(err.response.message)
-      })
+    .put(`${BASE_URL}/profile`, body, {
+      headers: {
+        auth: token
+      }
+    })
+    .then ((response) => {
+      alert("Perfil atualizado com sucesso!")
+      goToProfile(navigate)
+    })
+    .catch ((err) => {
+       console.log(err.response)
+    })
     clearFields()
   }
 

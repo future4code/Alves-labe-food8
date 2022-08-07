@@ -4,10 +4,14 @@ import { BASE_URL } from "../../constants/BASE_URL"
 import GlobalStateContext from "../../global/GlobalStateContext"
 import RestaurantProductCard from "../../components/RestaurantProductCard/RestaurantProductCard"
 import Cart from "../../components/Cart/Cart"
+import { useNavigate } from "react-router-dom"
+import { goToFeed } from "../../routes/Coordinator"
+
 
 const CartPage = () => {
     const { states, setters } = useContext(GlobalStateContext)
     const [pay, setPay] = useState("")
+    const navigate =useNavigate()
 
     useEffect(() => {
         if (states.productsCart.length < 1) {
@@ -24,12 +28,13 @@ const CartPage = () => {
         axios
             .post(`${BASE_URL}/restaurants/${states.currentRestaurant.id}/order`, body, {
                 headers: {
-                    auth: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im9lZDRzVUNMcXJDSGV3ZlVzQ2pYIiwibmFtZSI6IkdpbGVhZCBSYWFiIiwiZW1haWwiOiJnaWxlYWRyYWFiQGdtYWlsLmNvbSIsImNwZiI6IjEyMzQ1Njc4OTEwIiwiaGFzQWRkcmVzcyI6dHJ1ZSwiYWRkcmVzcyI6IlJ1YSBUZXN0ZSwgMTgwIC0gQmFpcnJvIFRlc3RlIiwiaWF0IjoxNjU5NjQ4MDgxfQ.uHGlgcs1a471lNDVO-ROLFU8ZbyhM7zI7rAVYFRvr5M"
-                }
+                    auth: localStorage.getItem('token')
+                  }
             }).then((resp) => {
                 alert("Seu pedido foi envidado com sucesso")
                 setters.setQuantity([])
                 setters.setProductsCart([])
+                goToFeed(navigate)
             }).catch((err) => {
                 alert(err.response.data.message)
             })

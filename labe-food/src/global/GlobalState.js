@@ -19,7 +19,9 @@ const GlobalState = props => {
     let newPreLoadedValues = {}
     axios
       .get(`${BASE_URL}/profile`, {
-        headers: HEADERS
+        headers: {
+          auth: localStorage.getItem('token')
+        }
       })
       .then(response => {
         setProfile(response.data.user)
@@ -39,7 +41,9 @@ const GlobalState = props => {
     let newPreLoadedValues = {}
     axios
       .get(`${BASE_URL}/profile/address`, {
-        headers: HEADERS
+        headers: {
+          auth: localStorage.getItem('token')
+        }
       })
       .then(response => {
         setAddress(response.data.address)
@@ -61,7 +65,9 @@ const GlobalState = props => {
   const getActiveOrder = () => {
     axios
       .get(`${BASE_URL}/active-order`, {
-        headers: HEADERS
+        headers: {
+          auth: localStorage.getItem('token')
+        }
       })
       .then(res => {
         setActiveOrder(res.data.order)

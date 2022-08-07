@@ -25,7 +25,9 @@ const UpdateAddressForm = () => {
     let body = form
     axios
       .put(`${BASE_URL}/address`, body, {
-        headers: HEADERS
+        headers: {
+          auth: localStorage.getItem('token')
+        }
       })
       .then((response) => {
         alert('Endereço atualizado')
