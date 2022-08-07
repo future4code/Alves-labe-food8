@@ -8,6 +8,7 @@ import { goToAdressForm, goToFeed } from '../../routes/Coordinator'
 const LoginForm = () => {
   const {form, onChange, clearFields} = useForm({email:"", password:"" })
 
+
   const navigate = useNavigate()
   
   const login = (event) => {

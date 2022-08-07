@@ -7,9 +7,11 @@ import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
 import Footer from '../../components/Footer/Footer'
+
 const UpdateProfile = () => {
   const { states, setters, requests } = useContext(GlobalStateContext)
-  const { form, onChange, clearFields } = useForm(states?.preLoadedValues)
+  const { form, onChange, clearFields } = useForm(states?.preLoadedProfileValues)
+  
   const navigate = useNavigate()
   useProtectedPage()
 
@@ -17,18 +19,24 @@ const UpdateProfile = () => {
     requests.getProfile()
   }, [])
 
+  const token = localStorage.getItem('token')
+
   const updateProfile = event => {
-    requests.getProfile()
+    event.preventDefault()
+
     let body = form
     axios
       .put(`${BASE_URL}/profile`, body, {
-        headers: HEADERS
+        headers: {
+          auth: token
+        }
       })
-      .then(response => {
+      .then((response) => {
         alert('Perfil atualizado com sucesso!')
         goToProfile(navigate)
       })
       .catch(err => {
+        console.log(err)
         alert(err.response.message)
       })
     clearFields()
