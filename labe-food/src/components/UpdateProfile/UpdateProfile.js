@@ -7,9 +7,11 @@ import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
 import Footer from '../../components/Footer/Footer'
+
 const UpdateProfile = () => {
   const { states, setters, requests } = useContext(GlobalStateContext)
-  const { form, onChange, clearFields } = useForm(states?.preLoadedValues)
+  const { form, onChange, clearFields } = useForm(states?.preLoadedProfileValues)
+  
   const navigate = useNavigate()
   useProtectedPage()
 
@@ -17,23 +19,25 @@ const UpdateProfile = () => {
     requests.getProfile()
   }, [])
 
-  console.log(states.preLoadedValues)
-
-  console.log(form)
+  const token = localStorage.getItem('token')
 
   const updateProfile = event => {
-    requests.getProfile()
+    event.preventDefault()
+
     let body = form
     axios
       .put(`${BASE_URL}/profile`, body, {
-        headers: HEADERS
+        headers: {
+          auth: token
+        }
       })
-      .then(response => {
+      .then((response) => {
         alert('Perfil atualizado com sucesso!')
         goToProfile(navigate)
       })
       .catch(err => {
-        console.log(err.response)
+        console.log(err)
+        alert(err.response.message)
       })
     clearFields()
   }
@@ -44,7 +48,7 @@ const UpdateProfile = () => {
         <p>
           <input
             name="name"
-            placeholder={states.profile.name}
+            placeholder="Name"
             value={form.name}
             onChange={onChange}
             required
@@ -54,7 +58,7 @@ const UpdateProfile = () => {
         <p>
           <input
             name="email"
-            placeholder="email"
+            placeholder="E-mail"
             type="Email"
             value={form.email}
             onChange={onChange}
