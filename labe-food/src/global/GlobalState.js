@@ -70,7 +70,9 @@ const GlobalState = props => {
   const getActiveOrder = () => {
     axios
       .get(`${BASE_URL}/active-order`, {
-        headers: HEADERS
+        headers: {
+          auth: localStorage.getItem('token')
+        }
       })
       .then(res => {
         setActiveOrder(res.data.order)

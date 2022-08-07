@@ -20,7 +20,9 @@ const RestaurantPage = () => {
   const details = useRequestData(
     [],
     `${BASE_URL}/restaurants/${params.id}`,
-    HEADERS
+    {
+      auth: localStorage.getItem('token')
+    }
   )
   useEffect(() => {
     setDetailsToGlobalState()
@@ -28,12 +30,6 @@ const RestaurantPage = () => {
 
   const setDetailsToGlobalState = () => {
     setters.setRestaurantsDetails(details?.restaurant)
-  }
-  const addProduct = product => {
-    setters.setProductsCart([...states.productsCart, product])
-  }
-  const removeProduct = () => {
-    setters.setProductsCart([])
   }
 
   const products = details.restaurant?.products.map(product => {
