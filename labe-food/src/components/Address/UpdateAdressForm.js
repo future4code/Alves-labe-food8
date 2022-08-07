@@ -10,7 +10,7 @@ import Footer from '../Footer/Footer'
 
 const UpdateAddressForm = () => {
   const{states, setters, requests} = useContext(GlobalStateContext)
-  const { form, onChange, clearFields } = useForm(states?.preLoadedValues)
+  const { form, onChange, clearFields } = useForm(states?.preLoadedAddressValues)
 
   const navigate = useNavigate()
   useProtectedPage()
@@ -27,11 +27,11 @@ const UpdateAddressForm = () => {
       .put(`${BASE_URL}/address`, body, {
         headers: HEADERS
       })
-      .then(response => {
+      .then((response) => {
         alert('Endereço atualizado')
         goToProfile(navigate)
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err.response)
       })
     clearFields()

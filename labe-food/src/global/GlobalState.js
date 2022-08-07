@@ -12,7 +12,8 @@ const GlobalState = props => {
   const [quantity, setQuantity] = useState([])
   const [currentRestaurant, setCurrentRestaurant] = useState('')
   const [activeOrder, setActiveOrder] = useState()
-  const [preLoadedValues, setPreloadedValues] = useState({})
+  const [preLoadedProfileValues, setPreloadedProfileValues] = useState({})
+  const [preLoadedAddressValues, setPreloadedAddressValues] = useState({})
 
   const getProfile = () => {
     let newPreLoadedValues = {}
@@ -27,7 +28,7 @@ const GlobalState = props => {
           email: response.data.user.email,
           cpf: response.data.user.cpf
         }
-        setPreloadedValues(newPreLoadedValues)
+        setPreloadedProfileValues(newPreLoadedValues)
       })
       .catch(err => {
         console.log(err.response)
@@ -50,7 +51,7 @@ const GlobalState = props => {
           state: response.data.address.state,
           complement: response.data.address.complement,
         }
-        setPreloadedValues(newPreLoadedValues)
+        setPreloadedAddressValues(newPreLoadedValues)
       })
       .catch(err => {
         console.log(err.response)
@@ -78,7 +79,8 @@ const GlobalState = props => {
     quantity,
     currentRestaurant,
     activeOrder,
-    preLoadedValues
+    preLoadedProfileValues,
+    preLoadedAddressValues
   }
   const setters = {
     setRestaurantsDetails,
