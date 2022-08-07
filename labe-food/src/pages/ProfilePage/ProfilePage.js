@@ -7,10 +7,13 @@ import Footer from '../../components/Footer/Footer'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import axios from 'axios'
 import Header from '../../components/Header/Header'
+import {useProtectedPage} from '../../Hooks/useProtectedPage'
+
 
 const ProfilePage = () => {
   const navigate = useNavigate()
-
+  useProtectedPage()
+  
   const [orderHistory, setOrderHistoy] = useState([])
 
   useEffect(() => {

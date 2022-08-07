@@ -6,6 +6,7 @@ import LoginForm from '../../components/Login/LoginForm'
 
 const LoginPage = () => {
   const navigate = useNavigate()
+  useUnprotectedPage()
 
   return (
     <div>
