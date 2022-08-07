@@ -12,43 +12,53 @@ const GlobalState = props => {
   const [quantity, setQuantity] = useState([])
   const [currentRestaurant, setCurrentRestaurant] = useState('')
   const [activeOrder, setActiveOrder] = useState()
-  const [preLoadedValues, setPreloadedValues] = useState({})
-
+  const [preLoadedProfileValues, setPreloadedProfileValues] = useState({})
+  const [preLoadedAddressValues, setPreloadedAddressValues] = useState({})
 
   const getProfile = () => {
-      let newPreLoadedValues = {}
-      axios
+    let newPreLoadedValues = {}
+    axios
       .get(`${BASE_URL}/profile`, {
         headers: {
           auth: localStorage.getItem('token')
         }
       })
-      .then ((response) => {
+      .then(response => {
         setProfile(response.data.user)
         newPreLoadedValues = {
           name: response.data.user.name,
           email: response.data.user.email,
           cpf: response.data.user.cpf
         }
-        setPreloadedValues(newPreLoadedValues)
+        setPreloadedProfileValues(newPreLoadedValues)
       })
-      .catch ((err) => {
+      .catch(err => {
         console.log(err.response)
       })
   }
-  
+
   const getAddress = () => {
-      axios
+    let newPreLoadedValues = {}
+    axios
       .get(`${BASE_URL}/profile/address`, {
         headers: {
           auth: localStorage.getItem('token')
         }
       })
-      .then ((response) => {
+      .then(response => {
         setAddress(response.data.address)
+        newPreLoadedValues = {
+          street: response.data.address.street,
+          number: response.data.address.number,
+          neighbourhood: response.data.address.neighbourhood,
+          city: response.data.address.city,
+          state: response.data.address.state,
+          complement: response.data.address.complement,
+        }
+        setPreloadedAddressValues(newPreLoadedValues)
       })
-      .catch ((err) => {
-         console.log(err.response)
+      .catch(err => {
+        console.log(err.response)
       })
   }
 
@@ -63,14 +73,30 @@ const GlobalState = props => {
         setActiveOrder(res.data.order)
       })
       .catch(err => {
-        alert(err.response.message)
+        console(err.response.message)
       })
   }
 
-  const states = { restaurantDetails, productsCart, profile, address,quantity,currentRestaurant, activeOrder, preLoadedValues}
-  const setters = { setRestaurantsDetails, setProductsCart, setProfile, setAddress,setQuantity,setCurrentRestaurant }
-  const requests = {getProfile, getAddress, getActiveOrder}
-
+  const states = {
+    restaurantDetails,
+    productsCart,
+    profile,
+    address,
+    quantity,
+    currentRestaurant,
+    activeOrder,
+    preLoadedProfileValues,
+    preLoadedAddressValues
+  }
+  const setters = {
+    setRestaurantsDetails,
+    setProductsCart,
+    setProfile,
+    setAddress,
+    setQuantity,
+    setCurrentRestaurant
+  }
+  const requests = { getProfile, getAddress, getActiveOrder }
 
   return (
     <GlobalStateContext.Provider value={{ states, setters, requests }}>

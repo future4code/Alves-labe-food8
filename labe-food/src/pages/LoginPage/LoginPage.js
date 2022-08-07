@@ -5,7 +5,9 @@ import { goToSignUp } from '../../routes/Coordinator'
 import LoginForm from '../../components/Login/LoginForm'
 
 const LoginPage = () => {
+  useUnprotectedPage()
   const navigate = useNavigate()
+  useUnprotectedPage()
 
   return (
     <div>

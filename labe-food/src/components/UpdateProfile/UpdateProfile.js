@@ -6,25 +6,20 @@ import { useProtectedPage } from '../../Hooks/useProtectedPage'
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
+import Footer from '../../components/Footer/Footer'
 
 const UpdateProfile = () => {
-  const{states, setters, requests} = useContext(GlobalStateContext)
-
-
-  const {form, onChange, clearFields} = useForm(states.preLoadedValues)
+  const { states, setters, requests } = useContext(GlobalStateContext)
+  const { form, onChange, clearFields } = useForm(states?.preLoadedProfileValues)
+  
+  const navigate = useNavigate()
+  useProtectedPage()
 
   useEffect(() => {
     requests.getProfile()
-  },[form])
- 
-  console.log(states.preLoadedValues)
+  }, [])
 
-  useProtectedPage()
-
-  const navigate = useNavigate()
-
-
-  console.log(form)
+  const token = localStorage.getItem('token')
 
   const updateProfile = event => {
     event.preventDefault()
@@ -33,7 +28,7 @@ const UpdateProfile = () => {
     axios
     .put(`${BASE_URL}/profile`, body, {
       headers: {
-        auth: localStorage.getItem('token')
+        auth: token
       }
     })
     .then ((response) => {
@@ -52,7 +47,7 @@ const UpdateProfile = () => {
         <p>
           <input
             name="name"
-            placeholder={states.profile.name}
+            placeholder="Name"
             value={form.name}
             onChange={onChange}
             required
@@ -62,7 +57,7 @@ const UpdateProfile = () => {
         <p>
           <input
             name="email"
-            placeholder="email"
+            placeholder="E-mail"
             type="Email"
             value={form.email}
             onChange={onChange}
@@ -86,6 +81,7 @@ const UpdateProfile = () => {
           <button>Salvar</button>
         </p>
       </form>
+      <Footer />
     </div>
   )
 }

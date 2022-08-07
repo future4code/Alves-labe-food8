@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Div1, Div2, Div3, Div4, DivOrderCard } from './Styled'
 import Edit from '../../assets/edit.png'
 import { goToEditAdress, goToEditProfile } from '../../routes/Coordinator'
@@ -7,14 +7,23 @@ import Footer from '../../components/Footer/Footer'
 import { BASE_URL, HEADERS } from '../../constants/BASE_URL'
 import axios from 'axios'
 import Header from '../../components/Header/Header'
+import {useProtectedPage} from '../../Hooks/useProtectedPage'
+import GlobalStateContext from '../../global/GlobalStateContext'
+
 
 const ProfilePage = () => {
-  const navigate = useNavigate()
 
+  const{states, setters, requests} = useContext(GlobalStateContext)
+
+  const navigate = useNavigate()
+  useProtectedPage()
+  
   const [orderHistory, setOrderHistoy] = useState([])
 
   useEffect(() => {
     getOrderHistory()
+    requests.getProfile()
+    requests.getAddress()
   }, [])
 
   const getOrderHistory = () => {
@@ -57,14 +66,14 @@ const ProfilePage = () => {
       <Header title={'Meu Perfil'} />
       <h1>Meu perfil</h1>
       <Div2>
-        <p>Nome do usuário</p>
-        <p>E-mail do usuário</p>
-        <p>CPF do usuário</p>
+        <p>{states.profile.name}</p>
+        <p>{states.profile.email}</p>
+        <p>{states.profile.cpf}</p>
         <img src={Edit} onClick={() => goToEditProfile(navigate)} />
       </Div2>
       <Div3>
         <h3>Endereço cadastrado</h3>
-        <p>Endereço do usuário</p>
+        <p>Rua {states.address.street}, {states.address.number} - {states.address.city}</p>
         <img src={Edit} onClick={() => goToEditAdress(navigate)} />
       </Div3>
       <Div4>

@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import {BASE_URL} from '../../constants/BASE_URL'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from '../../Hooks/useForm'
-import {useUnprotectedPage} from '../../Hooks/useUnprotectedPage'
 import axios from 'axios'
 import { goToAdressForm } from '../../routes/Coordinator'
 
 const SignUpForm = () => {
   const {form, onChange, clearFields} = useForm({name:"", email:"", cpf:"", password:"", confirmPassword:""})
-  console.log(form)
 
   const navigate = useNavigate()
   
@@ -17,7 +15,7 @@ const SignUpForm = () => {
 
     let body = form
     if (body.confirmPassword != body.password){
-      alert("passwords does not match")
+      alert("As senhas digitadas não coincidem. Verifique se o valor fornecido no campo 'Senha' corresponde ao valor no campo 'Confirmar' ")
     } else {
       delete body.confirmPassword
 
@@ -84,7 +82,7 @@ const SignUpForm = () => {
         <p>
           <input
             name="confirmPassword"
-            placeholder="Confirmar senha"
+            placeholder="Confirmar"
             type="password"
             value={form.confirmPassword}
             onChange={onChange}
