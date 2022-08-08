@@ -9,8 +9,7 @@ const SignUpPage = () => {
 
   return (
     <div>
-      <Header title={''} />
-      Cadastrar
+      <Header title={'Cadastrar'} />      
       <SignUpForm />
     </div>
   )

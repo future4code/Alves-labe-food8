@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from '../../Hooks/useForm'
 import axios from 'axios'
 import { goToAdressForm } from '../../routes/Coordinator'
+import { Div1 } from './styled'
+import Logo from '../../assets/logo-preto-1.png'
 
 const SignUpForm = () => {
   const {form, onChange, clearFields} = useForm({name:"", email:"", cpf:"", password:"", confirmPassword:""})
@@ -33,66 +35,80 @@ const SignUpForm = () => {
   }
 
   return (
-    <div>
+    <Div1>
+      <img src={Logo}/>
       <form onSubmit={signUp}>
-        <p>
+        <fieldset>
+          <legend>Nome*</legend>
           <input
             name="name"
-            placeholder="Nome"
+            placeholder="Nome e sobrenome"
             value={form.name}
             onChange={onChange}
             required
             />
-        </p>
+        </fieldset>
 
-        <p>
+        <fieldset>
+          <legend>E-mail*</legend>
+
           <input 
             name="email"
-            placeholder="email"
+            placeholder="email@email.com"
             type="Email"
             value={form.email}
             onChange={onChange}
             required
             />
-        </p>
+        </fieldset>
         
-        <p>
+        
+        <fieldset>
+          <legend>CPF*</legend>
+          
           <input 
             name="cpf"
-            placeholder="CPF(apenas números)"
+            placeholder="000.000.000-00"
             pattern="[0-9]{11}" title="CPF incorreto"
             value={form.cpf}
             onChange={onChange}
             required
             />
-        </p>
+        </fieldset>
+        
 
-        <p>
+        <fieldset>
+          <legend>Senha*</legend>
+          
           <input
             name="password"
-            placeholder="Senha"
+            placeholder="Mínimo 6 caracteres"
             type="password"
             value={form.password}
             onChange={onChange}
             pattern=".{6,30}" title="Senha deve possuir no mínimo 6 e no máximo 30 caracteres"
             required
           />
-        </p>
+        </fieldset>
+        
 
-        <p>
+        <fieldset>
+          <legend>Confirmar*</legend>
+          
           <input
             name="confirmPassword"
-            placeholder="Confirmar"
+            placeholder="Confirme a senha"
             type="password"
             value={form.confirmPassword}
             onChange={onChange}
             pattern=".{6,30}" title="Senha deve possuir no mínimo 6 e no máximo 30 caracteres"
             required
           />  
-        </p>
-        <p><button>Criar</button></p>
+        </fieldset>
+        
+        <button>Criar</button>
       </form>
-    </div>
+    </Div1>
   )
 }
 

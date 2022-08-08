@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from '../../Hooks/useForm'
 import axios from 'axios'
 import { goToAdressForm, goToFeed } from '../../routes/Coordinator'
+import { Div1 }from './styled'
 
 const LoginForm = () => {
   const {form, onChange, clearFields} = useForm({email:"", password:"" })
@@ -29,32 +30,35 @@ const LoginForm = () => {
 
 
 return (
-  <div>
+  <Div1>
     <form onSubmit={login}>
-      <p>
+      <fieldset>
+        <legend>E-mail*</legend>
         <input 
           name="email"
-          placeholder="E-mail"
+          placeholder="email@email.com"
           type="email"
           value={form.email}
           onChange={onChange}
           required
           />
-      </p>
-      <p>
+      </fieldset>
+     
+      <fieldset>
+        <legend>Senha*</legend>
         <input 
           name="password"
-          placeholder="Senha"
+          placeholder="Mínimo 6 caracteres"
           type="password"
           value={form.password}
           onChange={onChange}
           pattern=".{6,30}" title="Senha deve possuir no mínimo 8 e no máximo 30 caracteres"
           required
           />
-      </p>
-      <p><button>Entrar</button></p>
+      </fieldset>
+      <button>Entrar</button>
     </form>
-  </div>
+  </Div1>
   
   )
 }

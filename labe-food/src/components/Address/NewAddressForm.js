@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from '../../Hooks/useForm'
 import axios from 'axios'
 import { goToFeed } from '../../routes/Coordinator'
+import { Div1 } from './style'
 
 const NewAddressForm = () => {
   const { form, onChange, clearFields } = useForm({
@@ -41,19 +42,24 @@ const NewAddressForm = () => {
   }
 
   return (
-    <div>
+    <Div1>
       <form onSubmit={setAddress}>
-        <p>
+      <fieldset>
+          <legend>Logradouro*</legend>
+
           <input
             name="street"
-            placeholder="Logradouro"
+            placeholder="Rua / Av."
             value={form.street}
             onChange={onChange}
             required
           />
-        </p>
+      </fieldset>
+       
 
-        <p>
+      <fieldset>
+          <legend>Número*</legend>
+
           <input
             name="number"
             placeholder="Número"
@@ -61,9 +67,23 @@ const NewAddressForm = () => {
             onChange={onChange}
             required
           />
-        </p>
+      </fieldset>
 
-        <p>
+      <fieldset>
+          <legend>Complemento</legend>
+
+          <input
+            name="complement"
+            placeholder="Apto / Bloco"
+            value={form.complement}
+            onChange={onChange}
+          />
+      </fieldset>
+      
+
+      <fieldset>
+          <legend>Bairro*</legend>
+
           <input
             name="neighbourhood"
             placeholder="Bairro"
@@ -71,9 +91,12 @@ const NewAddressForm = () => {
             onChange={onChange}
             required
           />
-        </p>
+      </fieldset>
+     
 
-        <p>
+      <fieldset>
+          <legend>Cidade*</legend>
+
           <input
             name="city"
             placeholder="Cidade"
@@ -81,9 +104,12 @@ const NewAddressForm = () => {
             onChange={onChange}
             required
           />
-        </p>
+      </fieldset>
+      
 
-        <p>
+      <fieldset>
+          <legend>Estado*</legend>
+
           <input
             name="state"
             placeholder="Estado"
@@ -91,22 +117,15 @@ const NewAddressForm = () => {
             onChange={onChange}
             required
           />
-        </p>
+      </fieldset>
+      
 
-        <p>
-          <input
-            name="complement"
-            placeholder="Complemento"
-            value={form.complement}
-            onChange={onChange}
-          />
-        </p>
-
-        <p>
+      
+    
           <button>Salvar</button>
-        </p>
+      
       </form>
-    </div>
+    </Div1>
   )
 }
 
