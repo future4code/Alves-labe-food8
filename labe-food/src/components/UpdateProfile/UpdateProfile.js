@@ -6,7 +6,7 @@ import { useProtectedPage } from '../../Hooks/useProtectedPage'
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
-import Footer from '../../components/Footer/Footer'
+import {Div1} from './style'
 
 const UpdateProfile = () => {
   const { states, setters, requests } = useContext(GlobalStateContext)
@@ -42,9 +42,11 @@ const UpdateProfile = () => {
   }
 
   return (
-    <div>
+    <Div1>
       <form onSubmit={updateProfile}>
-        <p>
+        <fieldset>
+          <legend>Nome</legend>
+
           <input
             name="name"
             placeholder="Name"
@@ -52,9 +54,12 @@ const UpdateProfile = () => {
             onChange={onChange}
             required
           />
-        </p>
+        </fieldset>
+       
 
-        <p>
+        <fieldset>
+          <legend>E-mail</legend>
+          
           <input
             name="email"
             placeholder="E-mail"
@@ -63,9 +68,12 @@ const UpdateProfile = () => {
             onChange={onChange}
             required
           />
-        </p>
+        </fieldset>
+       
 
-        <p>
+        <fieldset>
+          <legend>CPF</legend>
+          
           <input
             name="cpf"
             placeholder="CPF(apenas números)"
@@ -75,14 +83,14 @@ const UpdateProfile = () => {
             onChange={onChange}
             required
           />
-        </p>
+        </fieldset>
+       
 
-        <p>
+        
           <button>Salvar</button>
-        </p>
+       
       </form>
-      <Footer />
-    </div>
+    </Div1>
   )
 }
 

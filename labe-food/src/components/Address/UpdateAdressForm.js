@@ -6,7 +6,7 @@ import { useProtectedPage } from '../../Hooks/useProtectedPage'
 import axios from 'axios'
 import { goToProfile } from '../../routes/Coordinator'
 import GlobalStateContext from '../../global/GlobalStateContext'
-import Footer from '../Footer/Footer'
+import {Div1} from './style'
 
 const UpdateAddressForm = () => {
   const{states, setters, requests} = useContext(GlobalStateContext)
@@ -40,9 +40,11 @@ const UpdateAddressForm = () => {
   }
 
   return (
-    <div>
+    <Div1>
       <form onSubmit={updateAdress}>
-        <p>
+        <fieldset>
+          <legend>Logradouro</legend>
+
           <input
             name="street"
             placeholder="Logradouro"
@@ -50,9 +52,12 @@ const UpdateAddressForm = () => {
             onChange={onChange}
             required
           />
-        </p>
+        </fieldset>
+        
 
-        <p>
+        <fieldset>
+          <legend>Número</legend>
+          
           <input
             name="number"
             placeholder="Número"
@@ -60,9 +65,12 @@ const UpdateAddressForm = () => {
             onChange={onChange}
             required
           />
-        </p>
+        </fieldset>
+        
 
-        <p>
+        <fieldset>
+          <legend>Bairro</legend>
+          
           <input
             name="neighbourhood"
             placeholder="Bairro"
@@ -70,9 +78,12 @@ const UpdateAddressForm = () => {
             onChange={onChange}
             required
           />
-        </p>
+        </fieldset>
+        
 
-        <p>
+        <fieldset>
+          <legend>Cidade</legend>
+          
           <input
             name="city"
             placeholder="Cidade"
@@ -82,9 +93,12 @@ const UpdateAddressForm = () => {
             title="Senha deve possuir no mínimo 6 e no máximo 30 caracteres"
             required
           />
-        </p>
+        </fieldset>
+        
 
-        <p>
+        <fieldset>
+          <legend>Estado</legend>
+          
           <input
             name="state"
             placeholder="Estado"
@@ -92,23 +106,26 @@ const UpdateAddressForm = () => {
             onChange={onChange}
             required
           />
-        </p>
+        </fieldset>
+        
 
-        <p>
+        <fieldset>
+          <legend>Complemento</legend>
+          
           <input
             name="complement"
             placeholder="Complemento"
             value={form.complement}
             onChange={onChange}
           />
-        </p>
+        </fieldset>
+        
 
-        <p>
+        
           <button>Salvar</button>
-        </p>
+        
       </form>
-      <Footer/>
-    </div>
+    </Div1>
   )
 }
 
