@@ -18,11 +18,11 @@ export default function InitialFocus(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
   const finalRef = React.useRef()
-
+console.log(props.product.currentRestaurant.id)
   const [quantityInput, setQuantityInput] = useState()
   const { states, setters } = useContext(GlobalStateContext)
-
   const onClickModal = e => {
+    if (states.currentRestaurant === ''||states.currentRestaurant.id===props.product.currentRestaurant.id){
     if(quantityInput>0){
     setters.setQuantity([
       ...states.quantity,
@@ -37,6 +37,21 @@ export default function InitialFocus(props) {
     props.handleQuantityCart(props.product)
     alert(`Você adicionou ${quantityInput} ao carrinho!`)
   }else{alert("escolha uma quantidade")}
+}else{
+  if(quantityInput>0){
+    setters.setQuantity([
+      {
+        id: props.product.id,
+        quantity: quantityInput,
+        price: props.product.price
+      }
+    ])
+    setQuantityInput(0)
+    props.setQuantity(quantityInput)
+    props.handleQuantityCart(props.product)
+    alert(`Você adicionou ${quantityInput} ao carrinho!`)
+  }else{alert("escolha uma quantidade")}
+}
   }
 
   const handleInput = e => {
