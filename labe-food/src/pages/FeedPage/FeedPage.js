@@ -20,8 +20,6 @@ const FeedPage = () => {
 
   useProtectedPage()
 
-
-
   const navigate = useNavigate()
 
   const handleFilterName = event => {
@@ -44,8 +42,9 @@ const FeedPage = () => {
       .then((res) => {
         setRestaurants(res.data.restaurants)
       }).catch((err) => {
-        alert(err.response.data.message)
+        //alert(err.response.data.message)
         if (err.response.data.message == "Usuário não possui endereço cadastrado") {
+          alert(err.response.data.message)
           goToAdressForm(navigate)
         }
       })
