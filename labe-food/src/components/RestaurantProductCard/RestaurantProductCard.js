@@ -25,6 +25,7 @@ export default function RestaurantProductCard(props) {
     if (product.currentRestaurant.id !== states.currentRestaurant.id) {
       setters.setProductsCart([product])
       setters.setCurrentRestaurant(product.currentRestaurant)
+      
     } else {
       const productsInCart =
         states.productsCart &&
@@ -40,7 +41,7 @@ export default function RestaurantProductCard(props) {
       }
     }
   }
-
+console.log(states.quantity)
   const remove = product => {
     const removeProduct =
       states.productsCart &&
